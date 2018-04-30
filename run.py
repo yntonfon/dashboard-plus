@@ -1,4 +1,4 @@
-from app import bootstrap_app
+from application.entrypoints.rest import bootstrap_app
 
 app = bootstrap_app()
 
