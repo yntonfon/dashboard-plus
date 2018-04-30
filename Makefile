@@ -17,6 +17,6 @@ coverage:
 cloc:
 	pygount --format=cloc-xml --out cloc.xml --suffix=py application/
 
-test:
+unit-test:
 	rm -r --force .pytest_cache
 	pytest tests/
