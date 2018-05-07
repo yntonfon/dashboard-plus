@@ -1,6 +1,6 @@
 from marshmallow import Schema, fields, validate
 
-from application.core.usecase.validate_new_account_payload_port import ValidateAccountCreationtPayloadPort
+from application.core.usecase.validate_account_payload_port import ValidateAccountCreationtPayloadPort
 
 
 class AccountCreatingValidator(Schema):
