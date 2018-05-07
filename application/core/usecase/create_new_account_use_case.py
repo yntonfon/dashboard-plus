@@ -21,7 +21,7 @@ class CreateNewAccountUseCase:
         return self._insert_account(account)
 
     def _validate_payload(self, payload: dict):
-        errors = self.validator.validate_creation_payload(payload)
+        errors = self.validator.validate_payload(payload)
         if errors:
             raise AppDataValidationException(messages=errors)
 

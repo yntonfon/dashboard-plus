@@ -1,24 +1,9 @@
-from marshmallow import Schema, fields, validate
-
-from application.core.usecase.validate_account_payload_port import ValidateAccountCreationtPayloadPort
+from application.core.usecase.validate_account_payload_port import ValidateAccountPayloadPort
 
 
-class AccountCreatingValidator(Schema):
-    username = fields.String(
-        required=True,
-        allow_none=False,
-        validate=validate.Length(min=1))
-    email = fields.Email(
-        required=True,
-        allow_none=False)
-    password = fields.String(
-        required=True,
-        allow_none=False,
-        validate=validate.Length(min=1))
+class AccountValidatorProvider(ValidateAccountPayloadPort):
+    def __init__(self, schema):
+        self.schema = schema
 
-
-class AccountDataValidator(ValidateAccountCreationtPayloadPort):
-
-    def validate_creation_payload(self, payload: dict) -> dict:
-        validator = AccountCreatingValidator()
-        return validator.validate(payload)
+    def validate_payload(self, payload):
+        return self.schema.validate(payload)

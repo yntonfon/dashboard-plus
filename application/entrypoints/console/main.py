@@ -6,7 +6,8 @@ from application.core.factory.account_factory import AccountFactory
 from application.core.usecase.create_new_account_use_case import CreateNewAccountUseCase
 from application.providers.data.account_database_provider import AccountDatabaseDataProvider
 from application.providers.security.password_security_provider import PasswordSecurityProvider
-from application.providers.validator.account_validator_provider import AccountDataValidator
+from application.providers.validator.account_validator_provider import AccountValidatorProvider
+from application.providers.validator.schema.account_schema import AccountSchema
 
 
 def main():
@@ -27,7 +28,8 @@ def main():
 
 
 def prepare_use_case():
-    validator = AccountDataValidator()
+    schema = AccountSchema()
+    validator = AccountValidatorProvider(schema)
     encryptor = PasswordSecurityProvider()
     factory = AccountFactory()
     repository = AccountDatabaseDataProvider()

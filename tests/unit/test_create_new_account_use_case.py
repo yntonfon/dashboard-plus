@@ -11,12 +11,12 @@ from application.core.factory.account_factory import AccountFactory
 from application.core.usecase.create_new_account_use_case import CreateNewAccountUseCase
 from application.core.usecase.encrypt_password_port import EncryptPasswordPort
 from application.core.usecase.insert_account_port import InsertAccountPort
-from application.core.usecase.validate_account_payload_port import ValidateAccountCreationtPayloadPort
+from application.core.usecase.validate_account_payload_port import ValidateAccountPayloadPort
 
 
 class TestCreateNewAccountUseCase:
     def setup_method(self):
-        self.validator = mock.create_autospec(ValidateAccountCreationtPayloadPort)
+        self.validator = mock.create_autospec(ValidateAccountPayloadPort)
         self.encryptor = mock.create_autospec(EncryptPasswordPort)
         self.factory = mock.create_autospec(AccountFactory)
         self.repository = mock.create_autospec(InsertAccountPort)
@@ -28,7 +28,7 @@ class TestCreateNewAccountUseCase:
         }
 
         # Configure mock
-        self.validator.validate_creation_payload.return_value = {}
+        self.validator.validate_payload.return_value = {}
 
     def test_returns_the_identifier_of_the_new_account(self):
         # Given
@@ -46,7 +46,7 @@ class TestCreateNewAccountUseCase:
         self.use_case.execute(self.payload)
 
         # Then
-        self.validator.validate_creation_payload.assert_called_with(self.payload)
+        self.validator.validate_payload.assert_called_with(self.payload)
 
     def test_encrypts_password(self):
         # When
@@ -84,7 +84,7 @@ class TestCreateNewAccountUseCase:
 
     def test_raises_error_when_payload_is_invalid(self):
         # Given
-        self.validator.validate_creation_payload.return_value = {'errors occured'}
+        self.validator.validate_payload.return_value = {'errors occured'}
 
         # When
         with pytest.raises(AppDataValidationException) as error:

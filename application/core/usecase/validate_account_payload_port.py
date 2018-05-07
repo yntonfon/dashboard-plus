@@ -1,8 +1,8 @@
 import abc
 
 
-class ValidateAccountCreationtPayloadPort(metaclass=abc.ABCMeta):
+class ValidateAccountPayloadPort(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
-    def validate_creation_payload(self, payload):
-        raise NotImplementedError('users must define validate_creation_payload to use this base class')
+    def validate_payload(self, payload: dict):
+        raise NotImplementedError('users must define validate_payload to use this base class')
