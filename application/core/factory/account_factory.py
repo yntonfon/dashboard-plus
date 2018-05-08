@@ -1,8 +1,8 @@
 from application.core.entity.account import Account
+from application.core.usecase.create_account_port import CreateAccountPort
 
 
-class AccountFactory:
+class AccountFactory(CreateAccountPort):
 
-    @staticmethod
-    def create(payload: dict) -> Account:
+    def create_account(self, payload: dict) -> Account:
         return Account(**payload)

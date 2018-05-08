@@ -69,12 +69,12 @@ class TestCreateNewAccountUseCase:
         self.use_case.execute(self.payload)
 
         # Then
-        self.factory.create.assert_called_with(expected)
+        self.factory.create_account.assert_called_with(expected)
 
     def test_saves_the_new_account(self):
         # Given
         account = Mock()
-        self.factory.create.return_value = account
+        self.factory.create_account.return_value = account
 
         # When
         self.use_case.execute(self.payload)

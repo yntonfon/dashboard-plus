@@ -5,10 +5,18 @@ from application.core.exception.dashboardplus_exception import (
     AppDataDuplicationException, PersitenceException,
     AppUnexpectedFailureException
 )
+from application.core.usecase.create_account_port import CreateAccountPort
+from application.core.usecase.encrypt_password_port import EncryptPasswordPort
+from application.core.usecase.insert_account_port import InsertAccountPort
+from application.core.usecase.validate_account_payload_port import ValidateAccountPayloadPort
 
 
 class CreateNewAccountUseCase:
-    def __init__(self, validator, encryptor, factory, repository):
+    def __init__(self,
+                 validator: ValidateAccountPayloadPort,
+                 encryptor: EncryptPasswordPort,
+                 factory: CreateAccountPort,
+                 repository: InsertAccountPort):
         self.repository = repository
         self.factory = factory
         self.encryptor = encryptor
@@ -17,7 +25,7 @@ class CreateNewAccountUseCase:
     def execute(self, payload):
         self._validate_payload(payload)
         creation_payload = self._generate_creation_payload(payload)
-        account = self.factory.create(creation_payload)
+        account = self.factory.create_account(creation_payload)
         return self._insert_account(account)
 
     def _validate_payload(self, payload: dict):
