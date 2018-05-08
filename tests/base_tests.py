@@ -9,8 +9,8 @@ class DatabaseTest:
         cls.db = DatabaseAccessLayer()
         cls.db.db_init(conn_string=get_database_url(), log=False)
 
-    def teardown_class(cls):
-        cls.db.db_drop()
+    def setup_method(cls):
+        cls.db.clear()
 
 
 @pytest.mark.integration_test

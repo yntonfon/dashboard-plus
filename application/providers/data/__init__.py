@@ -10,13 +10,18 @@ BaseMapper = declarative_base()
 class DatabaseAccessLayer:
     engine = None
     conn_string = URL
-    base_mapper = BaseMapper
+    metadata = BaseMapper.metadata
     session = None
 
     def db_init(self, conn_string: str, log: bool):
         self.engine = create_engine(conn_string or self.conn_string, echo=log or False)
-        self.base_mapper.metadata.create_all(bind=self.engine)
+        self.metadata.create_all(bind=self.engine)
         self.session = sessionmaker(bind=self.engine)()
 
     def db_drop(self):
-        self.base_mapper.metadata.drop_all(bind=self.engine)
+        self.metadata.drop_all(bind=self.engine)
+
+    def clear(self):
+        for table in reversed(self.metadata.sorted_tables):
+            self.session.execute(table.delete())
+        self.session.commit()
