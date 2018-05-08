@@ -1,3 +1,5 @@
+import argparse
+
 import bcrypt
 
 from application.core.exception.dashboardplus_exception import (
@@ -13,10 +15,10 @@ from application.providers.validator.account_schema import AccountSchema
 from application.providers.validator.account_validator_provider import AccountValidatorProvider
 
 
-def main():
+def main(inputs):
     create_account_use_case = prepare_use_case()
     print_welcome_message()
-    credentials = ask_for_credentials()
+    credentials = inputs or ask_for_credentials()
 
     try:
         id = create_account_use_case.execute(credentials)
@@ -36,7 +38,7 @@ def prepare_use_case():
     encryptor = PasswordSecurityProvider(bcrypt)
     factory = AccountFactory()
     db = DatabaseAccessLayer()
-    db.db_init('')
+    db.db_init('', True)
     repository = AccountDatabaseProvider(db)
     use_case = CreateNewAccountUseCase(validator, encryptor, factory, repository)
     return use_case
@@ -59,4 +61,20 @@ def print_welcome_message():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description='Manage account.')
+    parser.add_argument("create", help="create a new account")
+    parser.add_argument("--username", help="username for the account")
+    parser.add_argument("--email", help="email for the account")
+    parser.add_argument("--password", help="password for the account")
+    args = parser.parse_args()
+
+    inputs = {}
+
+    if args.username:
+        inputs['username'] = args.username
+    if args.email:
+        inputs['email'] = args.email
+    if args.password:
+        inputs['password'] = args.password
+
+    main(inputs)
