@@ -2,3 +2,4 @@ Flask==0.12.2
 marshmallow==3.0.0b9
 bcrypt==3.1.4
 SQLAlchemy==1.2.7
+dependency-injector==3.3.2
