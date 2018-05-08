@@ -19,4 +19,16 @@ cloc:
 
 unit-test:
 	rm -r --force .pytest_cache
-	pytest tests/
+	pytest tests/ -m unit_test -n auto
+
+intergation-test:
+	rm -r --force .pytest_cache
+	pytest tests/ -m integration_test -n auto
+
+acceptance-test:
+	rm -r --force .pytest_cache
+	pytest tests/ -m acceptance_test -n auto
+
+test:
+	rm -r --force .pytest_cache
+	pytest tests/ -n auto
