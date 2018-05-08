@@ -17,3 +17,6 @@ class DatabaseAccessLayer:
         self.engine = create_engine(conn_string or self.conn_string, echo=True)
         self.base_mapper.metadata.create_all(bind=self.engine)
         self.session = sessionmaker(bind=self.engine)()
+
+    def db_drop(self):
+        self.base_mapper.metadata.drop_all(bind=self.engine)
