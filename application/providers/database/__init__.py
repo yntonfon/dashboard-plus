@@ -13,8 +13,8 @@ class DatabaseAccessLayer:
     base_mapper = BaseMapper
     session = None
 
-    def db_init(self, conn_string: str):
-        self.engine = create_engine(conn_string or self.conn_string, echo=True)
+    def db_init(self, conn_string: str, log: bool):
+        self.engine = create_engine(conn_string or self.conn_string, echo=log or False)
         self.base_mapper.metadata.create_all(bind=self.engine)
         self.session = sessionmaker(bind=self.engine)()
 

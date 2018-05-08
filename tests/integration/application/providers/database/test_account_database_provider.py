@@ -2,19 +2,12 @@ import pytest
 
 from application.core.entity.account import Account
 from application.core.exception.dashboardplus_exception import EntityAlreadyExistsException
-from application.providers.database import DatabaseAccessLayer
 from application.providers.database.account_database_provider import AccountDatabaseProvider
 from application.providers.database.mapper.account_mapper import AccountMapper
+from tests.base_tests import IntegrationTest
 
 
-class TestIntegAccountDatabaseProvider:
-    def setup_class(cls):
-        cls.db = DatabaseAccessLayer()
-        cls.db.db_init('sqlite:////tmp/:test-dashboard-plus:')
-
-    def teardown_class(cls):
-        cls.db.db_drop()
-
+class TestAccountDatabaseProvider(IntegrationTest):
     def setup_method(self):
         self.provider = AccountDatabaseProvider(self.db)
 

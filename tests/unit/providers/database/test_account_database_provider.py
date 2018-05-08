@@ -8,9 +8,10 @@ from application.core.entity.account import Account
 from application.core.exception.dashboardplus_exception import EntityAlreadyExistsException, PersitenceException
 from application.providers.database import DatabaseAccessLayer
 from application.providers.database.account_database_provider import AccountDatabaseProvider
+from tests.base_tests import UnitTest
 
 
-class TestAccountDatabaseProvider:
+class TestAccountDatabaseProvider(UnitTest):
     def setup_method(self):
         self.mock_db = mock.create_autospec(DatabaseAccessLayer)
         self.provider = AccountDatabaseProvider(self.mock_db)

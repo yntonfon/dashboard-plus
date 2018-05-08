@@ -1,7 +1,8 @@
 from application.providers.validator.schema.account_schema import AccountSchema
+from tests.base_tests import UnitTest
 
 
-class TestAccountSchema:
+class TestAccountSchema(UnitTest):
     def setup_method(self):
         self.schema = AccountSchema()
         self.payload = {
