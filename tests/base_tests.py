@@ -1,18 +1,26 @@
 import pytest
 
 from application.providers.data import DatabaseAccessLayer
+from tests.common import get_database_url
 
-URL_DB_TEST = 'sqlite:////tmp/:test-dashboard-plus:'
 
-
-@pytest.mark.integration_test
-class IntegrationTest:
+class DatabaseTest:
     def setup_class(cls):
         cls.db = DatabaseAccessLayer()
-        cls.db.db_init(conn_string=URL_DB_TEST, log=False)
+        cls.db.db_init(conn_string=get_database_url(), log=False)
 
     def teardown_class(cls):
         cls.db.db_drop()
+
+
+@pytest.mark.integration_test
+class IntegrationTest(DatabaseTest):
+    pass
+
+
+@pytest.mark.integration_test
+class E2ETest(DatabaseTest):
+    pass
 
 
 @pytest.mark.unit_test
