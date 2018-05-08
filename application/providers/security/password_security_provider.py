@@ -1,4 +1,4 @@
-from application.core.usecase.encrypt_password_port import EncryptPasswordPort
+from application.core.port.encrypt_password_port import EncryptPasswordPort
 
 ENCRYPTION_LOG_ROUNDS = 12
 

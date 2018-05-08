@@ -2,7 +2,7 @@ from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
 from application.core.entity.account import Account
 from application.core.exception.dashboardplus_exception import PersitenceException, EntityAlreadyExistsException
-from application.core.usecase.insert_account_port import InsertAccountPort
+from application.core.port.insert_account_port import InsertAccountPort
 from application.providers.data import DatabaseAccessLayer
 from application.providers.data.account_data_mapper import AccountMapper
 

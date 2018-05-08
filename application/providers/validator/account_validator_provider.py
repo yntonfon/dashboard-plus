@@ -1,4 +1,4 @@
-from application.core.usecase.validate_account_payload_port import ValidateAccountPayloadPort
+from application.core.port.validate_account_payload_port import ValidateAccountPayloadPort
 
 
 class AccountValidatorProvider(ValidateAccountPayloadPort):

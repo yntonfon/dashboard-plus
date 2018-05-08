@@ -5,10 +5,10 @@ from application.core.exception.dashboardplus_exception import (
     AppDataDuplicationException, PersitenceException,
     AppUnexpectedFailureException
 )
-from application.core.usecase.create_account_port import CreateAccountPort
-from application.core.usecase.encrypt_password_port import EncryptPasswordPort
-from application.core.usecase.insert_account_port import InsertAccountPort
-from application.core.usecase.validate_account_payload_port import ValidateAccountPayloadPort
+from application.core.port.create_account_port import CreateAccountPort
+from application.core.port.encrypt_password_port import EncryptPasswordPort
+from application.core.port.insert_account_port import InsertAccountPort
+from application.core.port.validate_account_payload_port import ValidateAccountPayloadPort
 
 
 class CreateNewAccountUseCase:

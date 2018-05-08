@@ -1,5 +1,5 @@
 from application.core.entity.account import Account
-from application.core.usecase.create_account_port import CreateAccountPort
+from application.core.port.create_account_port import CreateAccountPort
 
 
 class AccountFactory(CreateAccountPort):
