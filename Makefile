@@ -10,13 +10,25 @@ install:
 	pip install -r dev-requirements.txt
 
 coverage:
-	coverage run --branch --source app/ -m pytest tests/
+	coverage run --branch --source application/ -m pytest tests/
 	coverage html --title="Dashboard+ coverage report"
 	coverage report -m
 
 cloc:
-	pygount --format=cloc-xml --out cloc.xml --suffix=py app/
+	pygount --format=cloc-xml --out cloc.xml --suffix=py application/
+
+unit-test:
+	rm -r --force .pytest_cache
+	pytest tests/ -m unit_test -n auto
+
+intergation-test:
+	rm -r --force .pytest_cache
+	pytest tests/ -m integration_test -n auto
+
+acceptance-test:
+	rm -r --force .pytest_cache
+	pytest tests/ -m acceptance_test -n auto
 
 test:
 	rm -r --force .pytest_cache
-	pytest tests/
+	pytest tests/ -n auto
