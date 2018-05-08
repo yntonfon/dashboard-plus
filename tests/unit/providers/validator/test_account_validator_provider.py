@@ -1,7 +1,7 @@
 from unittest import mock
 
+from application.providers.validator.account_schema import AccountSchema
 from application.providers.validator.account_validator_provider import AccountValidatorProvider
-from application.providers.validator.schema.account_schema import AccountSchema
 from tests.base_tests import UnitTest
 
 

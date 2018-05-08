@@ -6,11 +6,11 @@ from application.core.exception.dashboardplus_exception import (
 )
 from application.core.factory.account_factory import AccountFactory
 from application.core.usecase.create_new_account_use_case import CreateNewAccountUseCase
-from application.providers.database import DatabaseAccessLayer
-from application.providers.database.account_database_provider import AccountDatabaseProvider
+from application.providers.data import DatabaseAccessLayer
+from application.providers.data.account_data_provider import AccountDatabaseProvider
 from application.providers.security.password_security_provider import PasswordSecurityProvider
+from application.providers.validator.account_schema import AccountSchema
 from application.providers.validator.account_validator_provider import AccountValidatorProvider
-from application.providers.validator.schema.account_schema import AccountSchema
 
 
 def main():
@@ -21,7 +21,7 @@ def main():
     try:
         id = create_account_use_case.execute(credentials)
     except AppDataValidationException as error:
-        print('Failed to create your account, due to invalid database -> ', error.messages)
+        print('Failed to create your account, due to invalid data -> ', error.messages)
     except AppDataDuplicationException as error:
         print('Failed to create your account, due to an existing one -> ', error.messages)
     except AppUnexpectedFailureException as error:

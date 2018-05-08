@@ -1,6 +1,6 @@
 import pytest
 
-from application.providers.database import DatabaseAccessLayer
+from application.providers.data import DatabaseAccessLayer
 
 URL_DB_TEST = 'sqlite:////tmp/:test-dashboard-plus:'
 

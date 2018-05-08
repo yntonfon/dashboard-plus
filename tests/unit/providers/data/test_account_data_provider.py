@@ -6,8 +6,8 @@ from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
 from application.core.entity.account import Account
 from application.core.exception.dashboardplus_exception import EntityAlreadyExistsException, PersitenceException
-from application.providers.database import DatabaseAccessLayer
-from application.providers.database.account_database_provider import AccountDatabaseProvider
+from application.providers.data import DatabaseAccessLayer
+from application.providers.data.account_data_provider import AccountDatabaseProvider
 from tests.base_tests import UnitTest
 
 
@@ -35,7 +35,7 @@ class TestAccountDatabaseProvider(UnitTest):
         # Then
         self.mock_db.session.commit.assert_called_with()
 
-    @patch('application.providers.database.account_database_provider.AccountMapper')
+    @patch('application.providers.data.account_data_provider.AccountMapper')
     def test_insert_should_return_account_identifier(self, mock_mapper):
         # Given
         self.account.id = 1

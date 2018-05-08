@@ -2,8 +2,8 @@ import pytest
 
 from application.core.entity.account import Account
 from application.core.exception.dashboardplus_exception import EntityAlreadyExistsException
-from application.providers.database.account_database_provider import AccountDatabaseProvider
-from application.providers.database.mapper.account_mapper import AccountMapper
+from application.providers.data.account_data_mapper import AccountMapper
+from application.providers.data.account_data_provider import AccountDatabaseProvider
 from tests.base_tests import IntegrationTest
 
 

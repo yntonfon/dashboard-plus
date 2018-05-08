@@ -1,4 +1,4 @@
-from application.providers.validator.schema.account_schema import AccountSchema
+from application.providers.validator.account_schema import AccountSchema
 from tests.base_tests import UnitTest
 
 

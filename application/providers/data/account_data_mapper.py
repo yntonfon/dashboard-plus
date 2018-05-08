@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean
 
-from application.providers.database import BaseMapper
+from application.providers.data import BaseMapper
 
 
 class AccountMapper(BaseMapper):
