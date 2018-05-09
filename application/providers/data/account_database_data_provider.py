@@ -7,7 +7,7 @@ from application.providers.data import DatabaseAccessLayer
 from application.providers.data.account_data_mapper import AccountMapper
 
 
-class AccountDatabaseProvider(InsertAccountPort):
+class AccountDatabaseDataProvider(InsertAccountPort):
     def __init__(self, db: DatabaseAccessLayer):
         self.db = db
 

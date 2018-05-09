@@ -13,15 +13,15 @@ class DatabaseAccessLayer:
     metadata = BaseMapper.metadata
     session = None
 
-    def db_init(self, conn_string: str, log: bool):
+    def init_db(self, conn_string: str, log: bool):
         self.engine = create_engine(conn_string or self.conn_string, echo=log or False)
         self.metadata.create_all(bind=self.engine)
         self.session = sessionmaker(bind=self.engine)()
 
-    def db_drop(self):
+    def drop_db(self):
         self.metadata.drop_all(bind=self.engine)
 
-    def clear(self):
+    def clear_db(self):
         for table in reversed(self.metadata.sorted_tables):
             self.session.execute(table.delete())
         self.session.commit()
