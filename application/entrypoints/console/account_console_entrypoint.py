@@ -9,9 +9,9 @@ from application.core.exception.dashboardplus_exception import (
 )
 
 
-def main(inputs):
+def main(user_inputs):
     create_account_use_case = IOCUsecase.create_new_account_use_case()
-    credentials = inputs or ask_for_credentials()
+    credentials = user_inputs or ask_for_credentials()
 
     try:
         account_id = create_account_use_case.execute(credentials)
