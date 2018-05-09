@@ -13,8 +13,5 @@ class IOCProviders(containers.DeclarativeContainer):
     """IoC container of providers."""
 
     password_security_provider = providers.Singleton(PasswordSecurityProvider, crypto=bcrypt, config=config)
-
-    account_schema = providers.Factory(AccountSchema)
-    account_validator_provider = providers.Singleton(AccountValidatorProvider, schema=account_schema)
-
-    account_database_data_provider = providers.Singleton(AccountDataProvider, session=IOCDatabase.db().session)
+    account_validator_provider = providers.Singleton(AccountValidatorProvider, schema=providers.Factory(AccountSchema))
+    account_database_data_provider = providers.Singleton(AccountDataProvider, session=IOCDatabase.db())
