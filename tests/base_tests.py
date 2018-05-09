@@ -1,13 +1,21 @@
 import pytest
 
-from application.providers.data import DatabaseAccessLayer
-from tests.common import get_database_url
+from application.configuration import config
+from application.configuration.ioc_database import IOCDatabase
+from tests.common import patch_url_if_xdist
 
 
 class DatabaseTest:
     def setup_class(cls):
-        cls.db = DatabaseAccessLayer()
-        cls.db.init_db(conn_string=get_database_url(), log=False)
+        cls.db = IOCDatabase.db()
+        cls.config = config()
+        cls.config.update({
+            'DATABASE_URL': 'sqlite:////tmp/:test-dashboard-plus:',
+            'DATABASE_LOGGER_ACTIVE': True
+        })
+        cls.db.init_db(
+            conn_string=patch_url_if_xdist(cls.config['DATABASE_URL']),
+            log=cls.config['DATABASE_LOGGER_ACTIVE'])
 
     def setup_method(cls):
         cls.db.clear_db()
