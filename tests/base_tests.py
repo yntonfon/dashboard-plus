@@ -26,7 +26,7 @@ class IntegrationTest(DatabaseTest):
     pass
 
 
-@pytest.mark.integration_test
+@pytest.mark.e2e_test
 class E2ETest(DatabaseTest):
     pass
 

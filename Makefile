@@ -21,13 +21,17 @@ unit-test:
 	rm -r --force .pytest_cache
 	pytest tests/ -m unit_test -n auto
 
-intergation-test:
+integration-test:
 	rm -r --force .pytest_cache
 	pytest tests/ -m integration_test -n auto
 
 acceptance-test:
 	rm -r --force .pytest_cache
 	pytest tests/ -m acceptance_test -n auto
+
+e2e-test:
+	rm -r --force .pytest_cache
+	pytest tests/ -m e2e_test -n auto
 
 test:
 	rm -r --force .pytest_cache
