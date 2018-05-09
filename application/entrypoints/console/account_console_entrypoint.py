@@ -14,11 +14,10 @@ from application.providers.data.account_database_data_provider import AccountDat
 
 def main(inputs):
     create_account_use_case = prepare_use_case()
-    print_welcome_message()
     credentials = inputs or ask_for_credentials()
 
     try:
-        id = create_account_use_case.execute(credentials)
+        account_id = create_account_use_case.execute(credentials)
     except AppDataValidationException as error:
         print('Failed to create your account, due to invalid data -> ', error.messages)
     except AppDataDuplicationException as error:
@@ -26,7 +25,7 @@ def main(inputs):
     except AppUnexpectedFailureException as error:
         print('An error occured while processing your request', error)
     else:
-        print('Your account has been succesfully created with id ', id)
+        print('Your account has been succesfully created with id ', account_id)
 
 
 def prepare_use_case():
@@ -43,6 +42,8 @@ def ask_for_credentials():
     username = input('Choose a username: ')
     email = input('Choose an email: ')
     password = input('Choose a strong password: ')
+    print('\n')
+
     return {
         'username': username,
         'email': email,
@@ -53,6 +54,7 @@ def ask_for_credentials():
 def print_welcome_message():
     print('Welcome to Dashboard Plus interface')
     print('First step would be to create an account')
+    print('\n')
 
 
 def init_app():
@@ -60,19 +62,19 @@ def init_app():
     IOCDatabase.db().init_db(app_config['DATABASE_URL'], app_config['DATABASE_LOGGER_ACTIVE'])
 
 
-def get_input_args():
-    inputs = {}
+def get_user_inputs():
+    user_inputs = {}
     parser = define_arg_parser()
     args = parser.parse_args()
 
     if args.username:
-        inputs['username'] = args.username
+        user_inputs['username'] = args.username
     if args.email:
-        inputs['email'] = args.email
+        user_inputs['email'] = args.email
     if args.password:
-        inputs['password'] = args.password
+        user_inputs['password'] = args.password
 
-    return inputs
+    return user_inputs
 
 
 def define_arg_parser():
@@ -86,5 +88,7 @@ def define_arg_parser():
 
 if __name__ == "__main__":
     init_app()
-    inputs = get_input_args()
+    print_welcome_message()
+    inputs = get_user_inputs()
     main(inputs)
+    exit(0)
