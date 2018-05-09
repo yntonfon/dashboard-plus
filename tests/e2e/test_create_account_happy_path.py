@@ -17,7 +17,7 @@ class TestCreateAccountHappyPath(E2ETest):
         account_validator_provider = IOCProviders.account_validator_provider()
         pwd_security_provider = IOCProviders.password_security_provider()
         factory = AccountFactory()
-        repository = AccountDataProvider(self.db.session)
+        repository = AccountDataProvider(self.db)
         use_case = CreateNewAccountUseCase(account_validator_provider, pwd_security_provider, factory, repository)
 
         # When

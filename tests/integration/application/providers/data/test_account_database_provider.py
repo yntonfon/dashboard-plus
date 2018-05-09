@@ -10,7 +10,7 @@ from tests.base_tests import IntegrationTest
 class TestAccountDatabaseProvider(IntegrationTest):
     def setup_method(self):
         super().setup_method()
-        self.provider = AccountDataProvider(self.db.session)
+        self.provider = AccountDataProvider(self.db)
 
     def test_insert_should_create_a_new_records(self):
         # Given
