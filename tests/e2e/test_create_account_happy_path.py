@@ -1,10 +1,8 @@
-import bcrypt
-
+from application.configuration.ioc_providers import IOCProviders
 from application.core.factory.account_factory import AccountFactory
 from application.core.usecase.create_new_account_use_case import CreateNewAccountUseCase
 from application.providers.data.account_data_mapper import AccountMapper
 from application.providers.data.account_data_provider import AccountDataProvider
-from application.providers.security.password_security_provider import PasswordSecurityProvider
 from application.providers.validator.account_schema import AccountSchema
 from application.providers.validator.account_validator_provider import AccountValidatorProvider
 from tests.base_tests import E2ETest
@@ -20,10 +18,10 @@ class TestCreateAccountHappyPath(E2ETest):
         }
         schema = AccountSchema()
         validator = AccountValidatorProvider(schema)
-        encryptor = PasswordSecurityProvider(bcrypt)
+        pwd_security_provider = IOCProviders.password_security_provider()
         factory = AccountFactory()
         repository = AccountDataProvider(self.db)
-        use_case = CreateNewAccountUseCase(validator, encryptor, factory, repository)
+        use_case = CreateNewAccountUseCase(validator, pwd_security_provider, factory, repository)
 
         # When
         use_case.execute(input_payload)

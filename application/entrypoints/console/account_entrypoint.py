@@ -1,7 +1,6 @@
 import argparse
 
-import bcrypt
-
+from application.configuration.ioc_providers import IOCProviders
 from application.core.exception.dashboardplus_exception import (
     AppDataValidationException, AppDataDuplicationException,
     AppUnexpectedFailureException
@@ -10,7 +9,6 @@ from application.core.factory.account_factory import AccountFactory
 from application.core.usecase.create_new_account_use_case import CreateNewAccountUseCase
 from application.providers.data import DatabaseAccessLayer
 from application.providers.data.account_data_provider import AccountDataProvider
-from application.providers.security.password_security_provider import PasswordSecurityProvider
 from application.providers.validator.account_schema import AccountSchema
 from application.providers.validator.account_validator_provider import AccountValidatorProvider
 
@@ -35,12 +33,12 @@ def main(inputs):
 def prepare_use_case():
     schema = AccountSchema()
     validator = AccountValidatorProvider(schema)
-    encryptor = PasswordSecurityProvider(bcrypt)
+    password_security_provider = IOCProviders.password_security_provider()
     factory = AccountFactory()
     db = DatabaseAccessLayer()
     db.db_init('', True)
     repository = AccountDataProvider(db)
-    use_case = CreateNewAccountUseCase(validator, encryptor, factory, repository)
+    use_case = CreateNewAccountUseCase(validator, password_security_provider, factory, repository)
     return use_case
 
 
