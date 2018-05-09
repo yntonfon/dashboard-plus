@@ -33,7 +33,7 @@ def prepare_use_case():
     password_security_provider = IOCProviders.password_security_provider()
     factory = AccountFactory()
     db = DatabaseAccessLayer()
-    db.db_init('', True)
+    db.init_db('', True)
     repository = AccountDataProvider(db)
     use_case = CreateNewAccountUseCase(account_validator_provider, password_security_provider, factory, repository)
     return use_case

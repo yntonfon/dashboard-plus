@@ -7,10 +7,10 @@ from tests.common import get_database_url
 class DatabaseTest:
     def setup_class(cls):
         cls.db = DatabaseAccessLayer()
-        cls.db.db_init(conn_string=get_database_url(), log=False)
+        cls.db.init_db(conn_string=get_database_url(), log=False)
 
     def setup_method(cls):
-        cls.db.clear()
+        cls.db.clear_db()
 
 
 @pytest.mark.integration_test
