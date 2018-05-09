@@ -3,14 +3,14 @@ import pytest
 from application.core.entity.account import Account
 from application.core.exception.dashboardplus_exception import EntityAlreadyExistsException
 from application.providers.data.account_data_mapper import AccountMapper
-from application.providers.data.account_data_provider import AccountDatabaseProvider
+from application.providers.data.account_data_provider import AccountDataProvider
 from tests.base_tests import IntegrationTest
 
 
 class TestAccountDatabaseProvider(IntegrationTest):
     def setup_method(self):
         super().setup_method()
-        self.provider = AccountDatabaseProvider(self.db)
+        self.provider = AccountDataProvider(self.db)
 
     def test_insert_should_create_a_new_records(self):
         # Given

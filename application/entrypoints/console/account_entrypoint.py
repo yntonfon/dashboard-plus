@@ -9,7 +9,7 @@ from application.core.exception.dashboardplus_exception import (
 from application.core.factory.account_factory import AccountFactory
 from application.core.usecase.create_new_account_use_case import CreateNewAccountUseCase
 from application.providers.data import DatabaseAccessLayer
-from application.providers.data.account_data_provider import AccountDatabaseProvider
+from application.providers.data.account_data_provider import AccountDataProvider
 from application.providers.security.password_security_provider import PasswordSecurityProvider
 from application.providers.validator.account_schema import AccountSchema
 from application.providers.validator.account_validator_provider import AccountValidatorProvider
@@ -39,7 +39,7 @@ def prepare_use_case():
     factory = AccountFactory()
     db = DatabaseAccessLayer()
     db.db_init('', True)
-    repository = AccountDatabaseProvider(db)
+    repository = AccountDataProvider(db)
     use_case = CreateNewAccountUseCase(validator, encryptor, factory, repository)
     return use_case
 
