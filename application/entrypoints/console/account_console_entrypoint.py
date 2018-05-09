@@ -2,18 +2,15 @@ import argparse
 
 from application.configuration import config
 from application.configuration.ioc_database import IOCDatabase
-from application.configuration.ioc_providers import IOCProviders
+from application.configuration.ioc_usecase import IOCUsecase
 from application.core.exception.dashboardplus_exception import (
     AppDataValidationException, AppDataDuplicationException,
     AppUnexpectedFailureException
 )
-from application.core.factory.account_factory import AccountFactory
-from application.core.usecase.create_new_account_use_case import CreateNewAccountUseCase
-from application.providers.data.account_database_data_provider import AccountDatabaseDataProvider
 
 
 def main(inputs):
-    create_account_use_case = prepare_use_case()
+    create_account_use_case = IOCUsecase.create_new_account_use_case()
     credentials = inputs or ask_for_credentials()
 
     try:
@@ -26,16 +23,6 @@ def main(inputs):
         print('An error occured while processing your request', error)
     else:
         print('Your account has been succesfully created with id ', account_id)
-
-
-def prepare_use_case():
-    account_validator_provider = IOCProviders.account_validator_provider()
-    password_security_provider = IOCProviders.password_security_provider()
-    factory = AccountFactory()
-    db = IOCDatabase.db()
-    repository = AccountDatabaseDataProvider(db)
-    use_case = CreateNewAccountUseCase(account_validator_provider, password_security_provider, factory, repository)
-    return use_case
 
 
 def ask_for_credentials():

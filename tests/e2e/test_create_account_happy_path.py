@@ -1,8 +1,5 @@
-from application.configuration.ioc_providers import IOCProviders
-from application.core.factory.account_factory import AccountFactory
-from application.core.usecase.create_new_account_use_case import CreateNewAccountUseCase
+from application.configuration.ioc_usecase import IOCUsecase
 from application.providers.data.account_data_mapper import AccountMapper
-from application.providers.data.account_database_data_provider import AccountDatabaseDataProvider
 from tests.base_tests import E2ETest
 
 
@@ -14,11 +11,7 @@ class TestCreateAccountHappyPath(E2ETest):
             'email': 'bertrand@test.com',
             'password': 'Password01!'
         }
-        account_validator_provider = IOCProviders.account_validator_provider()
-        pwd_security_provider = IOCProviders.password_security_provider()
-        factory = AccountFactory()
-        repository = AccountDatabaseDataProvider(self.db)
-        use_case = CreateNewAccountUseCase(account_validator_provider, pwd_security_provider, factory, repository)
+        use_case = IOCUsecase.create_new_account_use_case()
 
         # When
         use_case.execute(input_payload)
