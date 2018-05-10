@@ -15,9 +15,12 @@ def main(user_inputs):
     usecase_output = register_account_usecase.handle(usecase_input)
 
     if usecase_output.status == UsecaseStatusEnum.success:
-        print('Your account has been succesfully created with id ', usecase_output.content)
+        print('message:', usecase_output.message.value)
+        print('account id:', usecase_output.content)
     else:
-        print(usecase_output.message, usecase_output.description, usecase_output.content)
+        print('message:', usecase_output.message.value)
+        print('description:', usecase_output.description.value)
+        print('content:', usecase_output.content or '')
 
 
 def ask_for_credentials():
