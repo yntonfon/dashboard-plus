@@ -11,7 +11,7 @@ from application.core.factory.account_factory import AccountFactory
 from application.core.port.encrypt_password_port import EncryptPasswordPort
 from application.core.port.insert_account_port import InsertAccountPort
 from application.core.port.validate_account_payload_port import ValidateAccountPayloadPort
-from application.core.usecase.create_new_account_use_case import CreateNewAccountUseCase
+from application.core.usecase.steps.create_account_step import CreateAccountStep
 
 
 class TestCreateNewAccountUseCase:
@@ -20,7 +20,7 @@ class TestCreateNewAccountUseCase:
         self.encryptor = mock.create_autospec(EncryptPasswordPort)
         self.factory = mock.create_autospec(AccountFactory)
         self.repository = mock.create_autospec(InsertAccountPort)
-        self.use_case = CreateNewAccountUseCase(self.validator, self.encryptor, self.factory, self.repository)
+        self.use_case = CreateAccountStep(self.validator, self.encryptor, self.factory, self.repository)
         self.payload = {
             'username': 'test',
             'email': 'test@test.com',

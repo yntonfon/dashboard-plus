@@ -11,7 +11,7 @@ from application.core.port.insert_account_port import InsertAccountPort
 from application.core.port.validate_account_payload_port import ValidateAccountPayloadPort
 
 
-class CreateNewAccountUseCase:
+class CreateAccountStep:
     def __init__(self,
                  validator: ValidateAccountPayloadPort,
                  encryptor: EncryptPasswordPort,

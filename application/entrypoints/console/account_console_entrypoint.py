@@ -2,7 +2,7 @@ import argparse
 
 from application.configuration import config
 from application.configuration.ioc_database import IOCDatabase
-from application.configuration.ioc_usecase import IOCUsecase
+from application.configuration.ioc_usecase import IOCUsecaseSteps
 from application.core.exception.dashboardplus_exception import (
     AppDataValidationException, AppDataDuplicationException,
     AppUnexpectedFailureException
@@ -10,7 +10,7 @@ from application.core.exception.dashboardplus_exception import (
 
 
 def main(user_inputs):
-    create_account_use_case = IOCUsecase.create_new_account_use_case()
+    create_account_use_case = IOCUsecaseSteps.create_account_step()
     credentials = user_inputs or ask_for_credentials()
 
     try:

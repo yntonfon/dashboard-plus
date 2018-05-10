@@ -2,14 +2,14 @@ from dependency_injector import containers, providers
 
 from application.configuration.ioc_providers import IOCProviders
 from application.core.factory.account_factory import AccountFactory
-from application.core.usecase.create_new_account_use_case import CreateNewAccountUseCase
+from application.core.usecase.steps.create_account_step import CreateAccountStep
 
 
-class IOCUsecase(containers.DeclarativeContainer):
+class IOCUsecaseSteps(containers.DeclarativeContainer):
     """IoC container of usecase providers."""
 
-    create_new_account_use_case = providers.Factory(
-        CreateNewAccountUseCase,
+    create_account_step = providers.Factory(
+        CreateAccountStep,
         validator=IOCProviders.account_validator_provider,
         encryptor=IOCProviders.password_security_provider,
         factory=providers.Factory(AccountFactory),

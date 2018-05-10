@@ -1,4 +1,4 @@
-from application.configuration.ioc_usecase import IOCUsecase
+from application.configuration.ioc_usecase import IOCUsecaseSteps
 from application.providers.data.account_data_mapper import AccountMapper
 from tests.base_tests import E2ETest
 
@@ -11,7 +11,7 @@ class TestCreateAccountHappyPath(E2ETest):
             'email': 'bertrand@test.com',
             'password': 'Password01!'
         }
-        use_case = IOCUsecase.create_new_account_use_case()
+        use_case = IOCUsecaseSteps.create_account_step()
 
         # When
         use_case.execute(input_payload)
