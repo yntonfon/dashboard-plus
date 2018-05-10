@@ -8,7 +8,7 @@ class UsecaseStatusEnum(Enum):
 
 class UsecaseMessageEnum(Enum):
     account_not_registered = 'Account registering failed'
-    account_registered = 'Account register with success'
+    account_registered = 'Account registered with success'
 
 
 class UsecaseDescriptionEnum(Enum):

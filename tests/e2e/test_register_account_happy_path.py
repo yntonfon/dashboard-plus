@@ -1,22 +1,23 @@
-from application.configuration.ioc_usecase import IOCUseCaseSteps
-from application.providers.data.account_data_mapper import AccountMapper
+from application.configuration.ioc_usecase import IOCUseCase
+from application.core.usecase.usecase_input import UsecaseInput
+from application.core.usecase.usecase_output import UsecaseStatusEnum, UsecaseMessageEnum
 from tests.base_tests import E2ETest
 
 
 class TestRegisterAccountHappyPath(E2ETest):
     def test_succesfully_register_new_account(self):
         # Given
-        input_payload = {
+        usecase = IOCUseCase.register_account_use_case()
+        usecase_input = UsecaseInput(payload={
             'username': 'Bertrand',
             'email': 'bertrand@test.com',
             'password': 'Password01!'
-        }
-        use_case = IOCUseCaseSteps.create_account_step()
+        })
 
         # When
-        use_case.execute(input_payload)
+        usecase_output = usecase.handle(usecase_input)
 
         # Then
-        account = self.db.session.query(AccountMapper).first()
-        assert 1 == account.id
-        assert 'Bertrand' == account.username
+        assert usecase_output.status == UsecaseStatusEnum.success
+        assert usecase_output.message == UsecaseMessageEnum.account_registered
+        assert usecase_output.content == 1
