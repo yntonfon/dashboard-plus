@@ -3,7 +3,7 @@ from application.core.exception.dashboardplus_exception import (
     InputValidationException,
     EntityAlreadyExistsException,
     AccountAlreadyExistsException, PersitenceException,
-    AppUnexpectedFailureException
+    UnexpectedFailureException
 )
 from application.core.port.create_account_port import CreateAccountPort
 from application.core.port.encrypt_password_port import EncryptPasswordPort
@@ -47,6 +47,6 @@ class CreateAccountStep:
         except EntityAlreadyExistsException:
             raise AccountAlreadyExistsException(messages='Account already exists')
         except PersitenceException:
-            raise AppUnexpectedFailureException()
+            raise UnexpectedFailureException()
         else:
             return account_id

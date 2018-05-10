@@ -19,7 +19,7 @@ class AccountAlreadyExistsException(InnerAppException):
     pass
 
 
-class AppUnexpectedFailureException(InnerAppException):
+class UnexpectedFailureException(InnerAppException):
     pass
 
 

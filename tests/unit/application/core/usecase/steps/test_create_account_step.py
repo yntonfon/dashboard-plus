@@ -5,7 +5,7 @@ import pytest
 
 from application.core.exception.dashboardplus_exception import (
     InputValidationException, EntityAlreadyExistsException,
-    AccountAlreadyExistsException, PersitenceException, AppUnexpectedFailureException
+    AccountAlreadyExistsException, PersitenceException, UnexpectedFailureException
 )
 from application.core.factory.account_factory import AccountFactory
 from application.core.port.encrypt_password_port import EncryptPasswordPort
@@ -109,5 +109,5 @@ class TestCreateNewAccountUseCase:
         self.repository.insert.side_effect = PersitenceException()
 
         # When
-        with pytest.raises(AppUnexpectedFailureException):
+        with pytest.raises(UnexpectedFailureException):
             self.use_case.execute(self.payload)

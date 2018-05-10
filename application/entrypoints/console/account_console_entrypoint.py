@@ -5,7 +5,7 @@ from application.configuration.ioc_database import IOCDatabase
 from application.configuration.ioc_usecase import IOCUsecaseSteps
 from application.core.exception.dashboardplus_exception import (
     InputValidationException, AccountAlreadyExistsException,
-    AppUnexpectedFailureException
+    UnexpectedFailureException
 )
 
 
@@ -19,7 +19,7 @@ def main(user_inputs):
         print('Failed to create your account, due to invalid data -> ', error.messages)
     except AccountAlreadyExistsException as error:
         print('Failed to create your account, due to an existing one -> ', error.messages)
-    except AppUnexpectedFailureException as error:
+    except UnexpectedFailureException as error:
         print('An error occured while processing your request', error)
     else:
         print('Your account has been succesfully created with id ', account_id)
