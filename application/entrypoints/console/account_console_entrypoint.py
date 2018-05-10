@@ -2,27 +2,22 @@ import argparse
 
 from application.configuration import config
 from application.configuration.ioc_database import IOCDatabase
-from application.configuration.ioc_usecase import IOCUseCaseSteps
-from application.core.exception.dashboardplus_exception import (
-    InputValidationException, AccountAlreadyExistsException,
-    UnexpectedFailureException
-)
+from application.configuration.ioc_usecase import IOCUseCase
+from application.core.usecase.usecase_input import UsecaseInput
+from application.core.usecase.usecase_output import UsecaseStatusEnum
 
 
 def main(user_inputs):
-    create_account_use_case = IOCUseCaseSteps.create_account_step()
+    register_account_usecase = IOCUseCase.register_account_use_case()
     credentials = user_inputs or ask_for_credentials()
+    usecase_input = UsecaseInput(payload=credentials)
 
-    try:
-        account_id = create_account_use_case.execute(credentials)
-    except InputValidationException as error:
-        print('Failed to create your account, due to invalid data -> ', error.messages)
-    except AccountAlreadyExistsException as error:
-        print('Failed to create your account, due to an existing one -> ', error.messages)
-    except UnexpectedFailureException as error:
-        print('An error occured while processing your request', error)
+    usecase_output = register_account_usecase.handle(usecase_input)
+
+    if usecase_output.status == UsecaseStatusEnum.success:
+        print('Your account has been succesfully created with id ', usecase_output.content)
     else:
-        print('Your account has been succesfully created with id ', account_id)
+        print(usecase_output.message, usecase_output.description, usecase_output.content)
 
 
 def ask_for_credentials():
