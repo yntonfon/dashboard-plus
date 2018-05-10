@@ -1,1 +1,2 @@
+from .create_account_activation_token_step import CreateAccountActivationTokenStep
 from .create_account_step import CreateAccountStep

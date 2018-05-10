@@ -20,4 +20,5 @@ class TestRegisterAccountHappyPath(E2ETest):
         # Then
         assert usecase_output.status == UsecaseStatusEnum.success
         assert usecase_output.message == UseCaseMessageEnum.account_registered
-        assert usecase_output.content == 1
+        assert usecase_output.content['account_id'] == 1
+        assert usecase_output.content['activation_token']

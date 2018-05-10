@@ -5,7 +5,7 @@ from application.core.exception.dashboardplus_exception import (
     AccountAlreadyExistsException
 )
 from application.core.usecase import RegisterAccountUseCase
-from application.core.usecase.steps import CreateAccountStep
+from application.core.usecase.steps import CreateAccountStep, CreateAccountActivationTokenStep
 from application.core.usecase.usecase_input import UseCaseInput
 from application.core.usecase.usecase_output import UsecaseStatusEnum, UseCaseMessageEnum, UseCaseDescriptionEnum
 from tests.base_tests import UnitTest
@@ -14,19 +14,28 @@ from tests.base_tests import UnitTest
 class TestRegisterAccountUseCase(UnitTest):
     def setup_method(self):
         self.mock_create_account_step = mock.create_autospec(CreateAccountStep)
-        self.usecase = RegisterAccountUseCase(self.mock_create_account_step)
-        self.usecase_input = UseCaseInput(payload='a payload')
+        self.mock_create_token_step = mock.create_autospec(CreateAccountActivationTokenStep)
+        self.usecase = RegisterAccountUseCase(self.mock_create_account_step, self.mock_create_token_step)
+        self.usecase_input = UseCaseInput(payload={'email': 'test@email.com'})
 
     def test_should_trigger_creation_account_step(self):
         # When
         self.usecase.handle(self.usecase_input)
 
         # Then
-        self.mock_create_account_step.execute.assert_called_with('a payload')
+        self.mock_create_account_step.execute.assert_called_with({'email': 'test@email.com'})
+
+    def test_should_trigger_creation_token_step(self):
+        # When
+        self.usecase.handle(self.usecase_input)
+
+        # Then
+        self.mock_create_token_step.execute.assert_called_with('test@email.com')
 
     def test_should_return_success_output_when_steps_are_completed(self):
         # When
-        self.mock_create_account_step.execute.return_value = 'step result'
+        self.mock_create_account_step.execute.return_value = 'account id'
+        self.mock_create_token_step.execute.return_value = 'token'
 
         # When
         usecase_output = self.usecase.handle(self.usecase_input)
@@ -34,7 +43,7 @@ class TestRegisterAccountUseCase(UnitTest):
         # Then
         assert UsecaseStatusEnum.success == usecase_output.status
         assert UseCaseMessageEnum.account_registered == usecase_output.message
-        assert 'step result' == usecase_output.content
+        assert {'account_id': 'account id', 'activation_token': 'token'} == usecase_output.content
 
     def test_should_return_error_output_when_a_validation_error_is_thrown(self):
         # Given
