@@ -4,14 +4,14 @@ from unittest.mock import Mock
 import pytest
 
 from application.core.exception.dashboardplus_exception import (
-    AppDataValidationException, EntityAlreadyExistsException,
-    AppDataDuplicationException, PersitenceException, AppUnexpectedFailureException
+    InputValidationException, EntityAlreadyExistsException,
+    AccountAlreadyExistsException, PersitenceException, UnexpectedFailureException
 )
 from application.core.factory.account_factory import AccountFactory
 from application.core.port.encrypt_password_port import EncryptPasswordPort
 from application.core.port.insert_account_port import InsertAccountPort
 from application.core.port.validate_account_payload_port import ValidateAccountPayloadPort
-from application.core.usecase.create_new_account_use_case import CreateNewAccountUseCase
+from application.core.usecase.steps.create_account_step import CreateAccountStep
 
 
 class TestCreateNewAccountUseCase:
@@ -20,7 +20,7 @@ class TestCreateNewAccountUseCase:
         self.encryptor = mock.create_autospec(EncryptPasswordPort)
         self.factory = mock.create_autospec(AccountFactory)
         self.repository = mock.create_autospec(InsertAccountPort)
-        self.use_case = CreateNewAccountUseCase(self.validator, self.encryptor, self.factory, self.repository)
+        self.step = CreateAccountStep(self.validator, self.encryptor, self.factory, self.repository)
         self.payload = {
             'username': 'test',
             'email': 'test@test.com',
@@ -36,21 +36,21 @@ class TestCreateNewAccountUseCase:
         self.repository.insert.return_value = account_id
 
         # When
-        actual = self.use_case.execute(self.payload)
+        actual = self.step.execute(self.payload)
 
         # Then
         assert account_id == actual
 
     def test_validates_constraint_on_the_given_payload(self):
         # When
-        self.use_case.execute(self.payload)
+        self.step.execute(self.payload)
 
         # Then
         self.validator.validate_payload.assert_called_with(self.payload)
 
     def test_encrypts_password(self):
         # When
-        self.use_case.execute(self.payload)
+        self.step.execute(self.payload)
 
         # Then
         self.encryptor.encrypt_password.assert_called_with('mysecret')
@@ -66,7 +66,7 @@ class TestCreateNewAccountUseCase:
         }
 
         # When
-        self.use_case.execute(self.payload)
+        self.step.execute(self.payload)
 
         # Then
         self.factory.create_account.assert_called_with(expected)
@@ -77,7 +77,7 @@ class TestCreateNewAccountUseCase:
         self.factory.create_account.return_value = account
 
         # When
-        self.use_case.execute(self.payload)
+        self.step.execute(self.payload)
 
         # Then
         self.repository.insert.assert_called_with(account)
@@ -87,8 +87,8 @@ class TestCreateNewAccountUseCase:
         self.validator.validate_payload.return_value = {'errors occured'}
 
         # When
-        with pytest.raises(AppDataValidationException) as error:
-            self.use_case.execute(self.payload)
+        with pytest.raises(InputValidationException) as error:
+            self.step.execute(self.payload)
 
         # Then
         assert {'errors occured'} == error.value.messages
@@ -98,16 +98,13 @@ class TestCreateNewAccountUseCase:
         self.repository.insert.side_effect = EntityAlreadyExistsException('', ())
 
         # When
-        with pytest.raises(AppDataDuplicationException) as error:
-            self.use_case.execute(self.payload)
-
-        # Then
-        assert "Account already exists" == error.value.messages
+        with pytest.raises(AccountAlreadyExistsException):
+            self.step.execute(self.payload)
 
     def test_raises_error_when_account_insertion_failed(self):
         # Given
         self.repository.insert.side_effect = PersitenceException()
 
         # When
-        with pytest.raises(AppUnexpectedFailureException):
-            self.use_case.execute(self.payload)
+        with pytest.raises(UnexpectedFailureException):
+            self.step.execute(self.payload)

@@ -1,9 +1,9 @@
 from application.core.entity.account import Account
 from application.core.exception.dashboardplus_exception import (
-    AppDataValidationException,
+    InputValidationException,
     EntityAlreadyExistsException,
-    AppDataDuplicationException, PersitenceException,
-    AppUnexpectedFailureException
+    AccountAlreadyExistsException, PersitenceException,
+    UnexpectedFailureException
 )
 from application.core.port.create_account_port import CreateAccountPort
 from application.core.port.encrypt_password_port import EncryptPasswordPort
@@ -11,7 +11,7 @@ from application.core.port.insert_account_port import InsertAccountPort
 from application.core.port.validate_account_payload_port import ValidateAccountPayloadPort
 
 
-class CreateNewAccountUseCase:
+class CreateAccountStep:
     def __init__(self,
                  validator: ValidateAccountPayloadPort,
                  encryptor: EncryptPasswordPort,
@@ -31,7 +31,7 @@ class CreateNewAccountUseCase:
     def _validate_payload(self, payload: dict):
         errors = self.validator.validate_payload(payload)
         if errors:
-            raise AppDataValidationException(messages=errors)
+            raise InputValidationException(messages=errors)
 
     def _generate_creation_payload(self, payload: dict) -> dict:
         return {
@@ -45,8 +45,8 @@ class CreateNewAccountUseCase:
         try:
             account_id = self.repository.insert(account)
         except EntityAlreadyExistsException:
-            raise AppDataDuplicationException(messages='Account already exists')
+            raise AccountAlreadyExistsException()
         except PersitenceException:
-            raise AppUnexpectedFailureException()
+            raise UnexpectedFailureException()
         else:
             return account_id

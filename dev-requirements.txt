@@ -5,3 +5,4 @@ pytest-sugar==0.9.1
 coverage==4.5.1
 pygount==1.0.0
 six==1.11
+Faker==0.8.13

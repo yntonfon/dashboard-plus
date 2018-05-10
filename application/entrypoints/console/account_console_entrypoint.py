@@ -2,27 +2,25 @@ import argparse
 
 from application.configuration import config
 from application.configuration.ioc_database import IOCDatabase
-from application.configuration.ioc_usecase import IOCUsecase
-from application.core.exception.dashboardplus_exception import (
-    AppDataValidationException, AppDataDuplicationException,
-    AppUnexpectedFailureException
-)
+from application.configuration.ioc_usecase import IOCUseCase
+from application.core.usecase.usecase_input import UseCaseInput
+from application.core.usecase.usecase_output import UsecaseStatusEnum
 
 
 def main(user_inputs):
-    create_account_use_case = IOCUsecase.create_new_account_use_case()
+    register_account_usecase = IOCUseCase.register_account_use_case()
     credentials = user_inputs or ask_for_credentials()
+    usecase_input = UseCaseInput(payload=credentials)
 
-    try:
-        account_id = create_account_use_case.execute(credentials)
-    except AppDataValidationException as error:
-        print('Failed to create your account, due to invalid data -> ', error.messages)
-    except AppDataDuplicationException as error:
-        print('Failed to create your account, due to an existing one -> ', error.messages)
-    except AppUnexpectedFailureException as error:
-        print('An error occured while processing your request', error)
+    usecase_output = register_account_usecase.handle(usecase_input)
+
+    if usecase_output.status == UsecaseStatusEnum.success:
+        print('message:', usecase_output.message.value)
+        print('account details:', usecase_output.content)
     else:
-        print('Your account has been succesfully created with id ', account_id)
+        print('message:', usecase_output.message.value)
+        print('description:', usecase_output.description.value)
+        print('content:', usecase_output.content or '')
 
 
 def ask_for_credentials():
