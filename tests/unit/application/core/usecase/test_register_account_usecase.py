@@ -11,7 +11,7 @@ from application.core.usecase.usecase_output import UsecaseStatusEnum, UseCaseMe
 from tests.base_tests import UnitTest
 
 
-class TestRegisterAccountUsecase(UnitTest):
+class TestRegisterAccountUseCase(UnitTest):
     def setup_method(self):
         self.mock_create_account_step = mock.create_autospec(CreateAccountStep)
         self.usecase = RegisterAccountUseCase(self.mock_create_account_step)
