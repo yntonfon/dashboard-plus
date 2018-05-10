@@ -7,7 +7,7 @@ from application.providers.data.account_database_data_provider import AccountDat
 from tests.base_tests import IntegrationTest
 
 
-class TestAccountDatabaseProvider(IntegrationTest):
+class TestAccountDatabaseDataProvider(IntegrationTest):
     def setup_method(self):
         super().setup_method()
         self.provider = AccountDatabaseDataProvider(self.db)
