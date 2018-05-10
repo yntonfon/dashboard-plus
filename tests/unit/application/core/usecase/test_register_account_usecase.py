@@ -17,14 +17,26 @@ class TestRegisterAccountUsecase(UnitTest):
         self.usecase = RegisterAccountUseCase(self.mock_create_account_step)
         self.usecase_input = UsecaseInput(payload='a payload')
 
-    def test_should_execute_creation_account_step(self):
+    def test_should_trigger_creation_account_step(self):
         # When
         self.usecase.handle(self.usecase_input)
 
         # Then
         self.mock_create_account_step.execute.assert_called_with('a payload')
 
-    def test_returns_output_error_when_a_validation_error_is_thrown(self):
+    def test_should_return_success_output_when_steps_are_completed(self):
+        # When
+        self.mock_create_account_step.execute.return_value = 'step result'
+
+        # When
+        usecase_output = self.usecase.handle(self.usecase_input)
+
+        # Then
+        assert UsecaseStatusEnum.success == usecase_output.status
+        assert UsecaseMessageEnum.account_created == usecase_output.message
+        assert 'step result' == usecase_output.content
+
+    def test_should_return_error_output_when_a_validation_error_is_thrown(self):
         # Given
         self.mock_create_account_step.execute.side_effect = InputValidationException(messages='help')
 
@@ -36,7 +48,7 @@ class TestRegisterAccountUsecase(UnitTest):
         assert UsecaseMessageEnum.invalid_input_data == usecase_output.message
         assert 'help' == usecase_output.description
 
-    def test_returns_output_error_when_an_account_already_exists_exception_is_thrown(self):
+    def test_should_return_error_output_when_an_account_already_exists_exception_is_thrown(self):
         # Given
         self.mock_create_account_step.execute.side_effect = AccountAlreadyExistsException()
 
@@ -47,7 +59,7 @@ class TestRegisterAccountUsecase(UnitTest):
         assert UsecaseStatusEnum.failure == usecase_output.status
         assert UsecaseMessageEnum.account_already_exists == usecase_output.message
 
-    def test_returns_output_error_when_an_unexpected_error_is_thrown(self):
+    def test_should_return_error_output_when_an_unexpected_error_is_thrown(self):
         # Given
         self.mock_create_account_step.execute.side_effect = UnexpectedFailureException()
 

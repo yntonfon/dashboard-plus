@@ -10,6 +10,7 @@ class UsecaseMessageEnum(Enum):
     invalid_input_data = 'Invalid input data'
     account_already_exists = 'Account already exists'
     unexpected_error = 'An unexpected error occured, please try later'
+    account_created = 'Account created with success'
 
 
 class UsecaseOutput:
