@@ -4,11 +4,6 @@ from pytest_bdd import scenario, given, parsers, when, then
 from application.core.usecase.usecase_input import UseCaseInput
 
 
-@pytest.fixture()
-def usecase_input():
-    return ''
-
-
 @pytest.mark.acceptance_test
 @scenario('../register_account.feature', 'Successfully registering the new account')
 def test_successfully_registering_account():
