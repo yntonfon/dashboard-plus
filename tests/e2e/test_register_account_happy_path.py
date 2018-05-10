@@ -1,4 +1,4 @@
-from application.configuration.ioc_usecase import IOCUseCase
+from application.configuration.ioc_use_case import IOCUseCase
 from application.core.usecase.usecase_input import UsecaseInput
 from application.core.usecase.usecase_output import UsecaseStatusEnum, UsecaseMessageEnum
 from tests.base_tests import E2ETest

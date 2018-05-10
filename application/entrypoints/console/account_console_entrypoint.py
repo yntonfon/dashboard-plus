@@ -2,7 +2,7 @@ import argparse
 
 from application.configuration import config
 from application.configuration.ioc_database import IOCDatabase
-from application.configuration.ioc_usecase import IOCUseCase
+from application.configuration.ioc_use_case import IOCUseCase
 from application.core.usecase.usecase_input import UsecaseInput
 from application.core.usecase.usecase_output import UsecaseStatusEnum
 

@@ -7,7 +7,7 @@ from application.core.usecase.steps.create_account_step import CreateAccountStep
 
 
 class IOCUseCaseSteps(containers.DeclarativeContainer):
-    """IoC container of usecase providers."""
+    """IoC container of use case step providers."""
 
     create_account_step = providers.Factory(
         CreateAccountStep,
@@ -19,6 +19,8 @@ class IOCUseCaseSteps(containers.DeclarativeContainer):
 
 
 class IOCUseCase(containers.DeclarativeContainer):
+    """IoC container of usecase providers."""
+
     register_account_use_case = providers.Factory(
         RegisterAccountUseCase,
         create_account_step=IOCUseCaseSteps.create_account_step
