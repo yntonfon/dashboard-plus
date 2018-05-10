@@ -31,3 +31,27 @@ class TestAccountDatabaseDataProvider(IntegrationTest):
         with pytest.raises(EntityAlreadyExistsException):
             self.provider.insert(account)
             self.provider.insert(account)
+
+    def test_does_account_exist_should_return_true_when_account_exist(self):
+        # Given
+        account = AccountMapper(email='test@test.com')
+        self.db.session.add(account)
+        self.db.session.commit()
+
+        # When
+        result = self.provider.does_account_exist('test@test.com')
+
+        # Then
+        assert result is True
+
+    def test_does_account_exist_should_return_false_when_account_do_no_exist(self):
+        # Given
+        account = AccountMapper(email='test@test.com')
+        self.db.session.add(account)
+        self.db.session.commit()
+
+        # When
+        result = self.provider.does_account_exist('notfound@test.com')
+
+        # Then
+        assert result is False

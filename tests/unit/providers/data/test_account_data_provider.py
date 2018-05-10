@@ -69,3 +69,30 @@ class TestAccountDatabaseProvider(UnitTest):
 
         # Then
         assert sql_error == error.value.origins
+
+    def test_does_account_exist_should_fetch_account_with_the_given_email(self):
+        # When
+        self.provider.does_account_exist('email')
+
+        # Then
+        self.mock_db.session.query().filter_by.assert_called_with(email='email')
+
+    def test_does_account_exist_should_return_true_when_account_exist(self):
+        # Given
+        self.mock_db.session.query().filter_by().one_or_none.return_value = 'account'
+
+        # When
+        result = self.provider.does_account_exist('email')
+
+        # Then
+        assert result is True
+
+    def test_does_account_exist_should_return_false_when_account_do_not_exist(self):
+        # Given
+        self.mock_db.session.query().filter_by().one_or_none.return_value = None
+
+        # When
+        result = self.provider.does_account_exist('email')
+
+        # Then
+        assert result is False

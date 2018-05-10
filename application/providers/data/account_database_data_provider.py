@@ -2,12 +2,13 @@ from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
 from application.core.entity.account import Account
 from application.core.exception.dashboardplus_exception import PersitenceException, EntityAlreadyExistsException
+from application.core.port.does_account_exist_port import DoesAccountExistPort
 from application.core.port.insert_account_port import InsertAccountPort
 from application.providers.data import DatabaseAccessLayer
 from application.providers.data.account_data_mapper import AccountMapper
 
 
-class AccountDatabaseDataProvider(InsertAccountPort):
+class AccountDatabaseDataProvider(InsertAccountPort, DoesAccountExistPort):
     def __init__(self, db: DatabaseAccessLayer):
         self.db = db
 
@@ -28,3 +29,7 @@ class AccountDatabaseDataProvider(InsertAccountPort):
             raise PersitenceException(origins=error)
         else:
             return new_account.id
+
+    def does_account_exist(self, email: str) -> bool:
+        account = self.db.session.query(AccountMapper).filter_by(email=email).one_or_none()
+        return True if account else False
