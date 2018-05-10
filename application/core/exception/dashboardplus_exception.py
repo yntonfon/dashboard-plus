@@ -6,33 +6,33 @@ class DashboardPlusException(Exception, metaclass=abc.ABCMeta):
         raise NotImplementedError('users must inherate to use this base class')
 
 
-class OutputException(DashboardPlusException):
+class InnerAppException(DashboardPlusException):
     def __init__(self, messages=None):
         self.messages = messages
 
 
-class InputValidationException(OutputException):
+class InputValidationException(InnerAppException):
     pass
 
 
-class AppDataDuplicationException(OutputException):
+class AppDataDuplicationException(InnerAppException):
     pass
 
 
-class AppUnexpectedFailureException(OutputException):
+class AppUnexpectedFailureException(InnerAppException):
     pass
 
 
-class InputException(DashboardPlusException):
+class ProviderInputException(DashboardPlusException):
     def __init__(self, messages=None, origins=None):
         self.origins = origins
         self.messages = messages
 
 
-class EntityAlreadyExistsException(InputException):
+class EntityAlreadyExistsException(ProviderInputException):
     def __init__(self, name: str, keys: tuple):
         self.messages = 'An entity {0} is already created with fields {1}'.format(name, repr(keys))
 
 
-class PersitenceException(InputException):
+class PersitenceException(ProviderInputException):
     pass
