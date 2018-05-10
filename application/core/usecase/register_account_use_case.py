@@ -16,7 +16,7 @@ class RegisterAccountUseCase(BaseUsecase):
         usecase_output = UsecaseOutput()
 
         try:
-            self.create_account_step.execute(usecase_input.get_inputs())
+            self.create_account_step.execute(usecase_input.payload)
         except InputValidationException as error:
             usecase_output.status = UsecaseStatusEnum.failure
             usecase_output.message = UsecaseMessageEnum.invalid_input_data
