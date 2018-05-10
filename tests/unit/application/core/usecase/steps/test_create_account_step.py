@@ -5,7 +5,7 @@ import pytest
 
 from application.core.exception.dashboardplus_exception import (
     InputValidationException, EntityAlreadyExistsException,
-    AppDataDuplicationException, PersitenceException, AppUnexpectedFailureException
+    AccountAlreadyExistsException, PersitenceException, AppUnexpectedFailureException
 )
 from application.core.factory.account_factory import AccountFactory
 from application.core.port.encrypt_password_port import EncryptPasswordPort
@@ -98,7 +98,7 @@ class TestCreateNewAccountUseCase:
         self.repository.insert.side_effect = EntityAlreadyExistsException('', ())
 
         # When
-        with pytest.raises(AppDataDuplicationException) as error:
+        with pytest.raises(AccountAlreadyExistsException) as error:
             self.use_case.execute(self.payload)
 
         # Then

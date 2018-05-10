@@ -2,7 +2,7 @@ from application.core.entity.account import Account
 from application.core.exception.dashboardplus_exception import (
     InputValidationException,
     EntityAlreadyExistsException,
-    AppDataDuplicationException, PersitenceException,
+    AccountAlreadyExistsException, PersitenceException,
     AppUnexpectedFailureException
 )
 from application.core.port.create_account_port import CreateAccountPort
@@ -45,7 +45,7 @@ class CreateAccountStep:
         try:
             account_id = self.repository.insert(account)
         except EntityAlreadyExistsException:
-            raise AppDataDuplicationException(messages='Account already exists')
+            raise AccountAlreadyExistsException(messages='Account already exists')
         except PersitenceException:
             raise AppUnexpectedFailureException()
         else:

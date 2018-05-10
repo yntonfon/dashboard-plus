@@ -15,7 +15,7 @@ class InputValidationException(InnerAppException):
     pass
 
 
-class AppDataDuplicationException(InnerAppException):
+class AccountAlreadyExistsException(InnerAppException):
     pass
 
 
