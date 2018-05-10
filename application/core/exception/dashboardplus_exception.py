@@ -19,6 +19,10 @@ class AccountAlreadyExistsException(InnerAppException):
     pass
 
 
+class TokenInvalidException(InnerAppException):
+    pass
+
+
 class UnexpectedFailureException(InnerAppException):
     pass
 
