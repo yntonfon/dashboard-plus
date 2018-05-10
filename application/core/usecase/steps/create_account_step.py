@@ -45,7 +45,7 @@ class CreateAccountStep:
         try:
             account_id = self.repository.insert(account)
         except EntityAlreadyExistsException:
-            raise AccountAlreadyExistsException(messages='Account already exists')
+            raise AccountAlreadyExistsException()
         except PersitenceException:
             raise UnexpectedFailureException()
         else:

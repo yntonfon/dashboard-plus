@@ -98,11 +98,8 @@ class TestCreateNewAccountUseCase:
         self.repository.insert.side_effect = EntityAlreadyExistsException('', ())
 
         # When
-        with pytest.raises(AccountAlreadyExistsException) as error:
+        with pytest.raises(AccountAlreadyExistsException):
             self.use_case.execute(self.payload)
-
-        # Then
-        assert "Account already exists" == error.value.messages
 
     def test_raises_error_when_account_insertion_failed(self):
         # Given
