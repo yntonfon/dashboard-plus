@@ -1,7 +1,7 @@
 import pytest
 from pytest_bdd import scenario, given, parsers, when, then
 
-from application.core.usecase.usecase_input import UsecaseInput
+from application.core.usecase.usecase_input import UseCaseInput
 
 
 @pytest.fixture()
@@ -17,7 +17,7 @@ def test_successfully_registering_account():
 
 @given(parsers.parse('a username {username}, an email {email}, a password {password}'), target_fixture='usecase_input')
 def account_data(username, email, password):
-    return UsecaseInput(payload=dict(username=username, email=email, password=password))
+    return UseCaseInput(payload=dict(username=username, email=email, password=password))
 
 
 @when('I ask to register a new account')
@@ -43,7 +43,7 @@ def test_missing_account_data_for_registering_account():
 
 @given('no account data', target_fixture='usecase_input')
 def no_account_data():
-    return UsecaseInput()
+    return UseCaseInput()
 
 
 @then('an error is returned with the corresponding missing data')

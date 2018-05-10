@@ -6,18 +6,18 @@ class UsecaseStatusEnum(Enum):
     failure = 'FAILURE'
 
 
-class UsecaseMessageEnum(Enum):
+class UseCaseMessageEnum(Enum):
     account_not_registered = 'Account registering failed'
     account_registered = 'Account registered with success'
 
 
-class UsecaseDescriptionEnum(Enum):
+class UseCaseDescriptionEnum(Enum):
     invalid_input_data = 'Invalid input data'
     account_already_exists = 'Account already exists'
     unexpected_error = 'An unexpected error occured, please try later'
 
 
-class UsecaseOutput:
+class UseCaseOutput:
     def __init__(self, status=None, message=None, description=None, content=None):
         self.status = status
         self.message = message

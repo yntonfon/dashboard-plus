@@ -2,15 +2,15 @@ import argparse
 
 from application.configuration import config
 from application.configuration.ioc_database import IOCDatabase
-from application.configuration.ioc_use_case import IOCUseCase
-from application.core.usecase.usecase_input import UsecaseInput
+from application.configuration.ioc_usecase import IOCUseCase
+from application.core.usecase.usecase_input import UseCaseInput
 from application.core.usecase.usecase_output import UsecaseStatusEnum
 
 
 def main(user_inputs):
     register_account_usecase = IOCUseCase.register_account_use_case()
     credentials = user_inputs or ask_for_credentials()
-    usecase_input = UsecaseInput(payload=credentials)
+    usecase_input = UseCaseInput(payload=credentials)
 
     usecase_output = register_account_usecase.handle(usecase_input)
 

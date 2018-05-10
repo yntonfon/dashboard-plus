@@ -1,1 +1,1 @@
-from .register_account_use_case import RegisterAccountUseCase
+from .register_account_usecase import RegisterAccountUseCase
