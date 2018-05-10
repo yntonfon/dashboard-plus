@@ -7,7 +7,7 @@ from application.core.exception.dashboardplus_exception import (
 from application.core.usecase import RegisterAccountUseCase
 from application.core.usecase.steps import CreateAccountStep
 from application.core.usecase.usecase_input import UsecaseInput
-from application.core.usecase.usecase_output import UsecaseStatusEnum, UsecaseMessageEnum
+from application.core.usecase.usecase_output import UsecaseStatusEnum, UsecaseMessageEnum, UsecaseDescriptionEnum
 from tests.base_tests import UnitTest
 
 
@@ -33,7 +33,7 @@ class TestRegisterAccountUsecase(UnitTest):
 
         # Then
         assert UsecaseStatusEnum.success == usecase_output.status
-        assert UsecaseMessageEnum.account_created == usecase_output.message
+        assert UsecaseMessageEnum.account_registered == usecase_output.message
         assert 'step result' == usecase_output.content
 
     def test_should_return_error_output_when_a_validation_error_is_thrown(self):
@@ -45,8 +45,9 @@ class TestRegisterAccountUsecase(UnitTest):
 
         #
         assert UsecaseStatusEnum.failure == usecase_output.status
-        assert UsecaseMessageEnum.invalid_input_data == usecase_output.message
-        assert 'help' == usecase_output.description
+        assert UsecaseMessageEnum.account_not_registered == usecase_output.message
+        assert UsecaseDescriptionEnum.invalid_input_data == usecase_output.description
+        assert 'help' == usecase_output.content
 
     def test_should_return_error_output_when_an_account_already_exists_exception_is_thrown(self):
         # Given
@@ -57,7 +58,8 @@ class TestRegisterAccountUsecase(UnitTest):
 
         #
         assert UsecaseStatusEnum.failure == usecase_output.status
-        assert UsecaseMessageEnum.account_already_exists == usecase_output.message
+        assert UsecaseMessageEnum.account_not_registered == usecase_output.message
+        assert UsecaseDescriptionEnum.account_already_exists == usecase_output.description
 
     def test_should_return_error_output_when_an_unexpected_error_is_thrown(self):
         # Given
@@ -68,4 +70,5 @@ class TestRegisterAccountUsecase(UnitTest):
 
         #
         assert UsecaseStatusEnum.failure == usecase_output.status
-        assert UsecaseMessageEnum.unexpected_error == usecase_output.message
+        assert UsecaseMessageEnum.account_not_registered == usecase_output.message
+        assert UsecaseDescriptionEnum.unexpected_error == usecase_output.description
