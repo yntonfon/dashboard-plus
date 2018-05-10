@@ -55,3 +55,15 @@ class TestAccountDatabaseDataProvider(IntegrationTest):
 
         # Then
         assert result is False
+
+    def test_update_email_confirmed(self):
+        # Given
+        account = AccountMapper(email='test@test.com', email_confirmed=False)
+        self.db.session.add(account)
+        self.db.session.commit()
+
+        # When
+        self.provider.update_email_confirmed('test@test.com', True)
+
+        # Then
+        assert account.email_confirmed is True

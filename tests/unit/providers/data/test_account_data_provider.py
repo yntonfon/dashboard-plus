@@ -96,3 +96,11 @@ class TestAccountDatabaseProvider(UnitTest):
 
         # Then
         assert result is False
+
+    def test_update_email_confirmed_should_update_account_with_the_given_email(self):
+        # When
+        self.provider.update_email_confirmed('email', True)
+
+        # Then
+        self.mock_db.session.query().filter_by.assert_called_with(email='email')
+        self.mock_db.session.query().filter_by().update.assert_called_with({'email_confirmed': True})
