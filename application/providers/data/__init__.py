@@ -25,3 +25,6 @@ class DatabaseAccessLayer:
         for table in reversed(self.metadata.sorted_tables):
             self.session.execute(table.delete())
         self.session.commit()
+
+    def reset_session(self):
+        self.session = sessionmaker(bind=self.engine)()

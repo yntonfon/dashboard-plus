@@ -18,6 +18,7 @@ class DatabaseTest:
             log=cls.config['DATABASE_LOGGER_ACTIVE'])
 
     def setup_method(cls):
+        cls.db.reset_session()
         cls.db.clear_db()
 
 
