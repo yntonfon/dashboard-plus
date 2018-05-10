@@ -16,7 +16,7 @@ def main(user_inputs):
 
     if usecase_output.status == UsecaseStatusEnum.success:
         print('message:', usecase_output.message.value)
-        print('account id:', usecase_output.content)
+        print('account details:', usecase_output.content)
     else:
         print('message:', usecase_output.message.value)
         print('description:', usecase_output.description.value)
