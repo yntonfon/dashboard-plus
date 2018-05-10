@@ -4,7 +4,7 @@ from unittest.mock import Mock
 import pytest
 
 from application.core.exception.dashboardplus_exception import (
-    AppDataValidationException, EntityAlreadyExistsException,
+    InputValidationException, EntityAlreadyExistsException,
     AppDataDuplicationException, PersitenceException, AppUnexpectedFailureException
 )
 from application.core.factory.account_factory import AccountFactory
@@ -87,7 +87,7 @@ class TestCreateNewAccountUseCase:
         self.validator.validate_payload.return_value = {'errors occured'}
 
         # When
-        with pytest.raises(AppDataValidationException) as error:
+        with pytest.raises(InputValidationException) as error:
             self.use_case.execute(self.payload)
 
         # Then

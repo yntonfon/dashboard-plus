@@ -1,6 +1,6 @@
 from application.core.entity.account import Account
 from application.core.exception.dashboardplus_exception import (
-    AppDataValidationException,
+    InputValidationException,
     EntityAlreadyExistsException,
     AppDataDuplicationException, PersitenceException,
     AppUnexpectedFailureException
@@ -31,7 +31,7 @@ class CreateAccountStep:
     def _validate_payload(self, payload: dict):
         errors = self.validator.validate_payload(payload)
         if errors:
-            raise AppDataValidationException(messages=errors)
+            raise InputValidationException(messages=errors)
 
     def _generate_creation_payload(self, payload: dict) -> dict:
         return {

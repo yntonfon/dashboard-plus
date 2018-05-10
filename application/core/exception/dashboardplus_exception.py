@@ -11,7 +11,7 @@ class OutputException(DashboardPlusException):
         self.messages = messages
 
 
-class AppDataValidationException(OutputException):
+class InputValidationException(OutputException):
     pass
 
 
