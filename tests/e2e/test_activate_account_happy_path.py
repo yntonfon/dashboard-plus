@@ -5,7 +5,7 @@ from tests.base_tests import E2ETest
 
 
 class TestActivateAccountHappyPath(E2ETest):
-    def test_succesfully_register_new_account(self):
+    def test_succesfully_activate_new_account(self):
         # Given
         usecase = IOCUseCase.activate_account_use_case()
         token = self._given_a_registered_account()
