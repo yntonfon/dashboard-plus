@@ -6,20 +6,20 @@ from tests.common import patch_url_if_xdist
 
 
 class DatabaseTest:
-    def setup_class(cls):
-        cls.db = IOCDatabase.db()
-        cls.config = config()
-        cls.config.update({
+    def setup_method(self):
+        self.db = IOCDatabase.db()
+        self.config = config()
+        self.config.update({
             'DATABASE_URL': 'sqlite:////tmp/:test-dashboard-plus:',
             'DATABASE_LOGGER_ACTIVE': True
         })
-        cls.db.init_db(
-            conn_string=patch_url_if_xdist(cls.config['DATABASE_URL']),
-            log=cls.config['DATABASE_LOGGER_ACTIVE'])
+        self.db.init_db(
+            conn_string=patch_url_if_xdist(self.config['DATABASE_URL']),
+            log=self.config['DATABASE_LOGGER_ACTIVE'])
 
-    def setup_method(cls):
-        cls.db.clear_db()
-
+    def teardown_method(self):
+        self.db.session.rollback()
+        self.db.clear_db()
 
 @pytest.mark.integration_test
 class IntegrationTest(DatabaseTest):

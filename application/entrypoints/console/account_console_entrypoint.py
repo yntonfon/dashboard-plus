@@ -4,7 +4,7 @@ from application.configuration import config
 from application.configuration.ioc_database import IOCDatabase
 from application.configuration.ioc_usecase import IOCUseCase
 from application.core.usecase.usecase_input import UseCaseInput
-from application.core.usecase.usecase_output import UsecaseStatusEnum
+from application.core.usecase.usecase_output import UseCaseStatusEnum
 
 
 def main(user_inputs):
@@ -14,7 +14,7 @@ def main(user_inputs):
 
     usecase_output = register_account_usecase.handle(usecase_input)
 
-    if usecase_output.status == UsecaseStatusEnum.success:
+    if usecase_output.status == UseCaseStatusEnum.success:
         print('message:', usecase_output.message.value)
         print('account details:', usecase_output.content)
     else:

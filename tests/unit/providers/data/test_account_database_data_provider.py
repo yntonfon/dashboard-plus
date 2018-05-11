@@ -11,7 +11,7 @@ from application.providers.data.account_database_data_provider import AccountDat
 from tests.base_tests import UnitTest
 
 
-class TestAccountDatabaseProvider(UnitTest):
+class TestAccountDatabaseDataProvider(UnitTest):
     def setup_method(self):
         self.mock_db = mock.create_autospec(DatabaseAccessLayer)
         self.provider = AccountDatabaseDataProvider(self.mock_db)
@@ -69,3 +69,54 @@ class TestAccountDatabaseProvider(UnitTest):
 
         # Then
         assert sql_error == error.value.origins
+
+    def test_does_account_exist_should_fetch_account_with_the_given_email(self):
+        # When
+        self.provider.does_account_exist('email')
+
+        # Then
+        self.mock_db.session.query().filter_by.assert_called_with(email='email')
+
+    def test_does_account_exist_should_return_true_when_account_exist(self):
+        # Given
+        self.mock_db.session.query().filter_by().one_or_none.return_value = 'account'
+
+        # When
+        result = self.provider.does_account_exist('email')
+
+        # Then
+        assert result is True
+
+    def test_does_account_exist_should_return_false_when_account_do_not_exist(self):
+        # Given
+        self.mock_db.session.query().filter_by().one_or_none.return_value = None
+
+        # When
+        result = self.provider.does_account_exist('email')
+
+        # Then
+        assert result is False
+
+    def test_does_account_exist_should_raise_when_an_error_occured(self):
+        # Given
+        self.mock_db.session.query().filter_by().one_or_none.side_effect = SQLAlchemyError()
+
+        # When
+        with pytest.raises(PersitenceException):
+            self.provider.does_account_exist('email')
+
+    def test_update_email_confirmed_should_update_account_with_the_given_email(self):
+        # When
+        self.provider.update_email_confirmed('email', True)
+
+        # Then
+        self.mock_db.session.query().filter_by.assert_called_with(email='email')
+        self.mock_db.session.query().filter_by().update.assert_called_with({'email_confirmed': True})
+
+    def test_update_email_confirmed_should_raise_when_an_error_occured(self):
+        # Given
+        self.mock_db.session.query().filter_by().update.side_effect = SQLAlchemyError()
+
+        # When
+        with pytest.raises(PersitenceException):
+            self.provider.update_email_confirmed('email', True)

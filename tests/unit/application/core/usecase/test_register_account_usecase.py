@@ -7,7 +7,7 @@ from application.core.exception.dashboardplus_exception import (
 from application.core.usecase import RegisterAccountUseCase
 from application.core.usecase.steps import CreateAccountStep, CreateAccountActivationTokenStep
 from application.core.usecase.usecase_input import UseCaseInput
-from application.core.usecase.usecase_output import UsecaseStatusEnum, UseCaseMessageEnum, UseCaseDescriptionEnum
+from application.core.usecase.usecase_output import UseCaseStatusEnum, UseCaseMessageEnum, UseCaseDescriptionEnum
 from tests.base_tests import UnitTest
 
 
@@ -41,7 +41,7 @@ class TestRegisterAccountUseCase(UnitTest):
         usecase_output = self.usecase.handle(self.usecase_input)
 
         # Then
-        assert UsecaseStatusEnum.success == usecase_output.status
+        assert UseCaseStatusEnum.success == usecase_output.status
         assert UseCaseMessageEnum.account_registered == usecase_output.message
         assert {'account_id': 'account id', 'activation_token': 'token'} == usecase_output.content
 
@@ -53,7 +53,7 @@ class TestRegisterAccountUseCase(UnitTest):
         usecase_output = self.usecase.handle(self.usecase_input)
 
         #
-        assert UsecaseStatusEnum.failure == usecase_output.status
+        assert UseCaseStatusEnum.failure == usecase_output.status
         assert UseCaseMessageEnum.account_not_registered == usecase_output.message
         assert UseCaseDescriptionEnum.invalid_input_data == usecase_output.description
         assert 'help' == usecase_output.content
@@ -66,7 +66,7 @@ class TestRegisterAccountUseCase(UnitTest):
         usecase_output = self.usecase.handle(self.usecase_input)
 
         #
-        assert UsecaseStatusEnum.failure == usecase_output.status
+        assert UseCaseStatusEnum.failure == usecase_output.status
         assert UseCaseMessageEnum.account_not_registered == usecase_output.message
         assert UseCaseDescriptionEnum.account_already_exists == usecase_output.description
 
@@ -78,6 +78,6 @@ class TestRegisterAccountUseCase(UnitTest):
         usecase_output = self.usecase.handle(self.usecase_input)
 
         #
-        assert UsecaseStatusEnum.failure == usecase_output.status
+        assert UseCaseStatusEnum.failure == usecase_output.status
         assert UseCaseMessageEnum.account_not_registered == usecase_output.message
         assert UseCaseDescriptionEnum.unexpected_error == usecase_output.description

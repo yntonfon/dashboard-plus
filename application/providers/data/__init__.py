@@ -18,9 +18,6 @@ class DatabaseAccessLayer:
         self.metadata.create_all(bind=self.engine)
         self.session = sessionmaker(bind=self.engine)()
 
-    def drop_db(self):
-        self.metadata.drop_all(bind=self.engine)
-
     def clear_db(self):
         for table in reversed(self.metadata.sorted_tables):
             self.session.execute(table.delete())

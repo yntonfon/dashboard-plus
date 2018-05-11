@@ -2,12 +2,14 @@ from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
 from application.core.entity.account import Account
 from application.core.exception.dashboardplus_exception import PersitenceException, EntityAlreadyExistsException
+from application.core.port.does_account_exist_port import DoesAccountExistPort
 from application.core.port.insert_account_port import InsertAccountPort
+from application.core.port.update_email_confirmed_port import UpdateEmailConfirmedPort
 from application.providers.data import DatabaseAccessLayer
 from application.providers.data.account_data_mapper import AccountMapper
 
 
-class AccountDatabaseDataProvider(InsertAccountPort):
+class AccountDatabaseDataProvider(InsertAccountPort, DoesAccountExistPort, UpdateEmailConfirmedPort):
     def __init__(self, db: DatabaseAccessLayer):
         self.db = db
 
@@ -28,3 +30,17 @@ class AccountDatabaseDataProvider(InsertAccountPort):
             raise PersitenceException(origins=error)
         else:
             return new_account.id
+
+    def does_account_exist(self, email: str) -> bool:
+        try:
+            account = self.db.session.query(AccountMapper).filter_by(email=email).one_or_none()
+        except SQLAlchemyError:
+            raise PersitenceException()
+        else:
+            return True if account else False
+
+    def update_email_confirmed(self, email: str, value: bool) -> None:
+        try:
+            self.db.session.query(AccountMapper).filter_by(email=email).update({'email_confirmed': value})
+        except SQLAlchemyError:
+            raise PersitenceException()

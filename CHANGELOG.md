@@ -1,5 +1,6 @@
 ## [Unreleased]
 
+* gx - activate account
 * g8 - generate account validation token
 * g7 - add ioc container
 * g6 - add new user account use case
