@@ -10,7 +10,7 @@ install:
 	pip install -r dev-requirements.txt
 
 coverage:
-	coverage run --branch --source application/ -m pytest tests/
+	coverage run -m pytest tests/
 	coverage html --title="Dashboard+ coverage report"
 	coverage report -m
 
