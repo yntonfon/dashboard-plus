@@ -7,7 +7,7 @@ from application.core.port.update_email_confirmed_port import UpdateEmailConfirm
 from application.core.usecase import ActivateAccountUseCase
 from application.core.usecase.usecase_input import UseCaseInput
 from application.core.usecase.usecase_output import (
-    UsecaseStatusEnum, UseCaseMessageEnum,
+    UseCaseStatusEnum, UseCaseMessageEnum,
     UseCaseDescriptionEnum
 )
 
@@ -48,7 +48,7 @@ class TestActivateAccountUseCase:
         usecase_output = self.usecase.handle(self.usecase_input)
 
         # Then
-        assert UsecaseStatusEnum.success == usecase_output.status
+        assert UseCaseStatusEnum.success == usecase_output.status
         assert UseCaseMessageEnum.account_activated == usecase_output.message
 
     def test_should_return_failure_output_when_decoding_token_failed(self):
@@ -59,7 +59,7 @@ class TestActivateAccountUseCase:
         usecase_output = self.usecase.handle(self.usecase_input)
 
         # Then
-        assert UsecaseStatusEnum.failure == usecase_output.status
+        assert UseCaseStatusEnum.failure == usecase_output.status
         assert UseCaseMessageEnum.account_not_activated == usecase_output.message
         assert UseCaseDescriptionEnum.invalid_token == usecase_output.description
 
@@ -71,7 +71,7 @@ class TestActivateAccountUseCase:
         usecase_output = self.usecase.handle(self.usecase_input)
 
         # Then
-        assert UsecaseStatusEnum.failure == usecase_output.status
+        assert UseCaseStatusEnum.failure == usecase_output.status
         assert UseCaseMessageEnum.account_not_activated == usecase_output.message
         assert UseCaseDescriptionEnum.account_does_not_exist == usecase_output.description
 
@@ -83,7 +83,7 @@ class TestActivateAccountUseCase:
         usecase_output = self.usecase.handle(self.usecase_input)
 
         # Then
-        assert UsecaseStatusEnum.failure == usecase_output.status
+        assert UseCaseStatusEnum.failure == usecase_output.status
         assert UseCaseMessageEnum.account_not_activated == usecase_output.message
         assert UseCaseDescriptionEnum.unexpected_error == usecase_output.description
 
@@ -95,6 +95,6 @@ class TestActivateAccountUseCase:
         usecase_output = self.usecase.handle(self.usecase_input)
 
         # Then
-        assert UsecaseStatusEnum.failure == usecase_output.status
+        assert UseCaseStatusEnum.failure == usecase_output.status
         assert UseCaseMessageEnum.account_not_activated == usecase_output.message
         assert UseCaseDescriptionEnum.unexpected_error == usecase_output.description

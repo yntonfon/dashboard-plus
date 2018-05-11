@@ -6,7 +6,7 @@ from application.core.usecase.base_usecase import BaseUseCase
 from application.core.usecase.steps import CreateAccountStep, CreateAccountActivationTokenStep
 from application.core.usecase.usecase_input import UseCaseInput
 from application.core.usecase.usecase_output import (
-    UseCaseOutput, UsecaseStatusEnum, UseCaseMessageEnum,
+    UseCaseOutput, UseCaseStatusEnum, UseCaseMessageEnum,
     UseCaseDescriptionEnum
 )
 
@@ -33,7 +33,7 @@ class RegisterAccountUseCase(BaseUseCase):
             self.set_status_and_message_error(usecase_output)
             usecase_output.description = UseCaseDescriptionEnum.unexpected_error
         else:
-            usecase_output.status = UsecaseStatusEnum.success
+            usecase_output.status = UseCaseStatusEnum.success
             usecase_output.message = UseCaseMessageEnum.account_registered
             usecase_output.content = {
                 'account_id': account_id,
@@ -44,5 +44,5 @@ class RegisterAccountUseCase(BaseUseCase):
 
     @staticmethod
     def set_status_and_message_error(usecase_output):
-        usecase_output.status = UsecaseStatusEnum.failure
+        usecase_output.status = UseCaseStatusEnum.failure
         usecase_output.message = UseCaseMessageEnum.account_not_registered

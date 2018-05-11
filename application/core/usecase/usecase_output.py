@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class UsecaseStatusEnum(Enum):
+class UseCaseStatusEnum(Enum):
     success = 'SUCCESS'
     failure = 'FAILURE'
 

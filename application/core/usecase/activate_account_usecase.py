@@ -5,7 +5,7 @@ from application.core.port.update_email_confirmed_port import UpdateEmailConfirm
 from application.core.usecase.base_usecase import BaseUseCase
 from application.core.usecase.usecase_input import UseCaseInput
 from application.core.usecase.usecase_output import (
-    UseCaseOutput, UsecaseStatusEnum, UseCaseMessageEnum,
+    UseCaseOutput, UseCaseStatusEnum, UseCaseMessageEnum,
     UseCaseDescriptionEnum
 )
 
@@ -56,10 +56,10 @@ class ActivateAccountUseCase(BaseUseCase):
 
     @staticmethod
     def _set_failure_status_and_message(usecase_output):
-        usecase_output.status = UsecaseStatusEnum.failure
+        usecase_output.status = UseCaseStatusEnum.failure
         usecase_output.message = UseCaseMessageEnum.account_not_activated
 
     @staticmethod
     def _set_success_output(usecase_output):
-        usecase_output.status = UsecaseStatusEnum.success
+        usecase_output.status = UseCaseStatusEnum.success
         usecase_output.message = UseCaseMessageEnum.account_activated
