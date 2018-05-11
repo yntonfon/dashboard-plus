@@ -5,9 +5,10 @@ from itsdangerous import BadData, URLSafeTimedSerializer
 
 from application.core.exception.dashboardplus_exception import UnexpectedFailureException
 from application.providers.security.token_security_provider import TokenSecurityProvider
+from tests.base_tests import UnitTest
 
 
-class TestTokenSecurityProvider:
+class TestTokenSecurityProvider(UnitTest):
     def setup_method(self):
         config = {'SECRET_KEY': 'mysecret', 'ACTIVATION_ACCOUNT_TOKEN_MAX_AGE': 10}
         self.mock_crypto = mock.create_autospec(URLSafeTimedSerializer)

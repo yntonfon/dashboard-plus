@@ -10,9 +10,10 @@ from application.core.usecase.usecase_output import (
     UseCaseStatusEnum, UseCaseMessageEnum,
     UseCaseDescriptionEnum
 )
+from tests.base_tests import UnitTest
 
 
-class TestActivateAccountUseCase:
+class TestActivateAccountUseCase(UnitTest):
     def setup_method(self):
         self.mock_decode_token_provider = mock.create_autospec(DecodeActivationAccountTokenPort)
         self.mock_does_account_exist_provider = mock.create_autospec(DoesAccountExistPort)
