@@ -11,7 +11,7 @@ from application.providers.data.account_database_data_provider import AccountDat
 from tests.base_tests import UnitTest
 
 
-class TestAccountDatabaseProvider(UnitTest):
+class TestAccountDatabaseDataProvider(UnitTest):
     def setup_method(self):
         self.mock_db = mock.create_autospec(DatabaseAccessLayer)
         self.provider = AccountDatabaseDataProvider(self.mock_db)
