@@ -32,8 +32,12 @@ class AccountDatabaseDataProvider(InsertAccountPort, DoesAccountExistPort, Updat
             return new_account.id
 
     def does_account_exist(self, email: str) -> bool:
-        account = self.db.session.query(AccountMapper).filter_by(email=email).one_or_none()
-        return True if account else False
+        try:
+            account = self.db.session.query(AccountMapper).filter_by(email=email).one_or_none()
+        except SQLAlchemyError:
+            raise PersitenceException()
+        else:
+            return True if account else False
 
     def update_email_confirmed(self, email: str, value: bool) -> None:
         self.db.session.query(AccountMapper).filter_by(email=email).update({'email_confirmed': value})

@@ -97,6 +97,14 @@ class TestAccountDatabaseProvider(UnitTest):
         # Then
         assert result is False
 
+    def test_does_account_exist_should_raise_when_an_error_occured(self):
+        # Given
+        self.mock_db.session.query().filter_by().one_or_none.side_effect = SQLAlchemyError()
+
+        # When
+        with pytest.raises(PersitenceException):
+            self.provider.does_account_exist('email')
+
     def test_update_email_confirmed_should_update_account_with_the_given_email(self):
         # When
         self.provider.update_email_confirmed('email', True)
