@@ -1,16 +1,16 @@
 from itsdangerous import URLSafeTimedSerializer, BadData
 
 from application.core.exception.dashboardplus_exception import UnexpectedFailureException
-from application.core.port.create_safe_timed_token_port import CreateSafeTimedTokenPort
+from application.core.port.create_account_activation_token_port import CreateAccountActivationTokenPort
 from application.core.port.decode_safe_time_token_port import DecodeActivationAccountTokenPort
 
 
-class TokenSecurityProvider(CreateSafeTimedTokenPort, DecodeActivationAccountTokenPort):
+class TokenSecurityProvider(CreateAccountActivationTokenPort, DecodeActivationAccountTokenPort):
     def __init__(self, crypto: URLSafeTimedSerializer, config: dict):
         self.config = config
         self.crypto = crypto
 
-    def create_safe_time_token(self, payload):
+    def create_account_activation_token(self, payload):
         try:
             return self.crypto.dumps(payload, salt=self.config['SECRET_KEY'])
         except BadData:

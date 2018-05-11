@@ -15,7 +15,7 @@ class TestTokenSecurityProvider:
 
     def test_create_safe_time_token_should_call_dumps_on_crypto(self):
         # When
-        self.provider.create_safe_time_token('payload')
+        self.provider.create_account_activation_token('payload')
 
         # Then
         self.mock_crypto.dumps.assert_called_with('payload', salt='mysecret')
@@ -26,7 +26,7 @@ class TestTokenSecurityProvider:
 
         # When
         with pytest.raises(UnexpectedFailureException):
-            self.provider.create_safe_time_token('payload')
+            self.provider.create_account_activation_token('payload')
 
     def test_decode_activation_account_token_should_call_loads(self):
         # When
