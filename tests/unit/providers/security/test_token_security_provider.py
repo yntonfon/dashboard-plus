@@ -9,7 +9,7 @@ from application.providers.security.token_security_provider import TokenSecurity
 
 class TestTokenSecurityProvider:
     def setup_method(self):
-        config = {'SECRET_KEY': 'mysecret'}
+        config = {'SECRET_KEY': 'mysecret', 'ACTIVATION_ACCOUNT_TOKEN_MAX_AGE': 10}
         self.mock_crypto = mock.create_autospec(URLSafeTimedSerializer)
         self.provider = TokenSecurityProvider(self.mock_crypto, config)
 
@@ -27,3 +27,10 @@ class TestTokenSecurityProvider:
         # When
         with pytest.raises(UnexpectedFailureException):
             self.provider.create_safe_time_token('payload')
+
+    def test_decode_activation_account_token_should_call_loads(self):
+        # When
+        self.provider.decode_activation_account_token('token')
+
+        # Then
+        self.mock_crypto.loads.assert_called_with('token', salt='mysecret', max_age=10)
