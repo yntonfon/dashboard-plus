@@ -10,6 +10,7 @@ install:
 	pip install -r dev-requirements.txt
 
 coverage:
+	rm -rf htmlcov
 	coverage run -m pytest tests/
 	coverage html --title="Dashboard+ coverage report"
 	coverage report -m
