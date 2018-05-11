@@ -1,1 +1,2 @@
+from .activate_account_usecase import ActivateAccountUseCase
 from .register_account_usecase import RegisterAccountUseCase
